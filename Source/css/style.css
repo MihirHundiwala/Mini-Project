@@ -28,7 +28,11 @@ body {
     width: 100px;
 }
 
-/******************styling for sign up modal from line 32-132**********************/
+/******************styling for modal from line 32-141**********************/
+
+*{
+  box-sizing: border-box;
+}
 
 /* Full-width input fields */
 input[type=text], input[type=password] {
@@ -47,7 +51,7 @@ input[type=text]:focus, input[type=password]:focus {
 }
 
 /* Set a style for all buttons */
-.modalbtn {
+.modalbtn, .cancelbtn {
   background-color: #4CAF50;
   color: white;
   padding: 14px 20px;
@@ -64,12 +68,11 @@ input[type=text]:focus, input[type=password]:focus {
 
 /* Extra styles for the cancel button */
 .cancelbtn {
-  padding: 14px 20px;
   background-color: #f44336;
 }
 
 /* Float cancel and signup buttons and add an equal width */
-.cancelbtn, .signupbtn {
+.cancelbtn, .modalbtn {
   float: left;
   width: 50%;
 }
@@ -86,11 +89,11 @@ input[type=text]:focus, input[type=password]:focus {
   z-index: 1; /* Sit on top */
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
+  width: 80%; 
+  height: 100%; 
   overflow: auto; /* Enable scroll if needed */
-  background-color: #474e5d;
-  padding-top: 50px;
+  padding-top: 10px;
+  padding-left: 500px ;
 }
 
 /* Modal Content/Box */
