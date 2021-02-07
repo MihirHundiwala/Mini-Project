@@ -30,6 +30,10 @@ body {
 
 /******************styling for sign up modal from line 32-132**********************/
 
+*{
+  box-sizing: border-box
+}
+
 /* Full-width input fields */
 input[type=text], input[type=password] {
   width: 100%;
