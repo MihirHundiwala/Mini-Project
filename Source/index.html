@@ -29,8 +29,8 @@
         </form>
       </div>
       <div>
-        <button onclick="document.getElementbyID("signupmodal").style.display='block'" class="btn btn-outline-success" id="Sign_in" type="submit" >Sign In</button>
-        <button class="btn btn-outline-success" id="Sign_up" type="submit" >Sign Up</button>
+        <button class="btn btn-outline-success" id="Sign_in" type="submit" >Sign In</button>
+        <button onclick="document.getElementbyID("signupmodal").style.display='block'" class="btn btn-outline-success" id="Sign_up" type="submit" >Sign Up</button>
       </div>
     </div>
   </nav>
@@ -39,7 +39,7 @@
   <!-----------------------------div for sign up modal from line 39-69 --------------------------->
   
   <div id="signupmodal" class="modal">
-  <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+  <span onclick="document.getElementById('signupmodal').style.display='none'" class="close" title="Close Modal">&times;</span>
   <form class="modal-content" action="/action_page.php">
     <div class="container">
       <h1>Sign Up</h1>
