@@ -66,6 +66,11 @@ input[type=text]:focus, input[type=password]:focus {
   opacity:1;
 }
 
+/* Add padding to container elements */
+.container {
+  padding: 16px;
+}
+
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
