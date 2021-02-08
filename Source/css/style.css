@@ -1,0 +1,29 @@
+.navbar{
+    position: fixed;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.801);
+}
+
+.navbar-brand{
+    color: aqua;
+}
+
+body {
+    background-image: url("../pictures/BackgroundPurple.jpg");
+    background-size: cover;
+}
+
+.btn{
+    color: azure;
+    border-color: azure;
+}
+
+.btn:hover{
+    background-color: rgba(200, 200, 200, 0.507);
+    border-color: aliceblue;
+}
+
+
+#Logo{
+    width: 100px;
+}
