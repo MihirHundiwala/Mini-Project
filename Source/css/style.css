@@ -23,33 +23,64 @@ body {
     border-color: aliceblue;
 }
 
-
 #Logo{
     width: 100px;
 }
 
-/******************styling for modal from line 32-141**********************/
-
-*{
-  box-sizing: border-box;
+.wrapper {
+    position: relative;
+    display: flex;
+    width: 300px;
 }
 
+.search {
+    border: 1px solid grey;
+    border-radius: 5px;
+    height: 38px;
+    width: 100%;
+    padding: 2px 23px 2px 30px;
+    outline: 0;
+    background-color: #f5f5f5;
+}
+
+.search-icon {
+    position: absolute;
+    top: 12px;
+    left: 8px;
+    width: 15px;
+}
+
+.clear-icon {
+    position: absolute;
+    top: 14px;
+    right: 10px;
+    width: 12px;
+    cursor: pointer;
+    visibility: hidden;
+}
+
+.search:hover, .search:focus {
+    border: 1.5px solid #c4d6d4;
+    background-color: white;
+}
+
+
+/****************** styling for modal from line 70-172 **********************/
+
 /* Full-width input fields */
-input[type=text], input[type=password] {
+.modalinputs{
   width: 100%;
-  padding: 15px;
+  padding: 10px;
   margin: 5px 0 22px 0;
   display: inline-block;
   border: none;
   background: #f1f1f1;
 }
-
 /* Add a background color when the inputs get focus */
 input[type=text]:focus, input[type=password]:focus {
   background-color: #ddd;
   outline: none;
 }
-
 /* Set a style for all buttons */
 .modalbtn, .cancelbtn {
   background-color: #4CAF50;
