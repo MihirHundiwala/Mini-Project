@@ -35,8 +35,12 @@
         </form>
       </div>
       <div>
-        <button class="btn btn-outline-success" id="Sign_in" type="submit" >Sign in</button>
-        <button onclick="document.getElementById('signupmodal').style.display='block'" class="btn btn-outline-success" id="Sign_up" type="submit" >Sign Up</button>
+        <button onclick="document.getElementById('signinmodal').style.display='block'
+                         document.getElementById('signupmodal').style.display='none'" 
+                class="btn btn-outline-success" id="Sign_in" type="submit" >Sign In</button>
+        <button onclick="document.getElementById('signupmodal').style.display='block' 
+                         document.getElementById('signinmodal').style.display='none'" 
+                class="btn btn-outline-success" id="Sign_up" type="submit" >Sign Up</button>
       </div>
     </div>
   </nav>
@@ -53,7 +57,7 @@
     <div class="container">
       <h2>Sign Up</h2>
       <p>Please fill in this form to create an account.</p>
-      <hr>
+
       <label for="email"><b>Email</b></label>
       <input class="modalinputs" type="text" placeholder="Enter Email" name="email" required>
 
@@ -62,7 +66,7 @@
 
       <label for="psw-repeat"><b>Repeat Password</b></label>
       <input class="modalinputs" type="password" placeholder="Repeat Password" name="psw-repeat" required>
-      
+       
       <label>
         <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
       </label>
@@ -72,6 +76,33 @@
       <div class="clearfix">
         <button type="button" onclick="document.getElementById('signupmodal').style.display='none'" class="cancelbtn">Cancel</button>
         <button type="submit" class="modalbtn">Sign Up</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<!-------------------------------------------------------------------------------------------------->
+
+  <div id="signinmodal" class="modal">
+  <span onclick="document.getElementById('signinmodal').style.display='none'" class="close" title="Close Modal">&times;</span>
+  <form class="modal-content" action="/action_page.php">
+    <div class="container">
+      <h2>Sign In</h2>
+      <p>Enter Correct Credentials.</p>
+      <hr>
+      <label for="email"><b>Email</b></label>
+      <input class="modalinputs" type="text" placeholder="Enter Email" name="email" required>
+      <hr>
+      <label for="psw"><b>Password</b></label>
+      <input class="modalinputs" type="password" placeholder="Enter Password" name="psw" required>
+
+      <label>
+        <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
+      </label>
+
+      <div class="clearfix">
+        <button type="button" onclick="document.getElementById('signupmodal').style.display='none'" class="cancelbtn">Cancel</button>
+        <button type="submit" class="modalbtn">Sign In</button>
       </div>
     </div>
   </form>
