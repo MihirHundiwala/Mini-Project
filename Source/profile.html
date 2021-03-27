@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/fontawesome.min.css">
+    
+        <!-- Custom CSS-->
+        <link rel="stylesheet" href="css/profile-design.css">
+        <title>Profile</title>
+    </head>
+
+    <body>
+
+        <div class="container my-3 my-sm-5">
+            <header>
+                <h1>Join us</h1>
+                <p>Complete your profile to get started...</p>
+            </header>
+            <form>
+                
+                <div class="row">
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label for="firstname">First Name: <span>*</span></label>
+                          <input type="text" class="form-control" placeholder="Riya" id="firstname" name="firstname" required>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label for="lastname">Last Name: <span>*</span></label>
+                          <input type="text" class="form-control" placeholder="Shah" id="lastname" name="lastname" required>
+                        </div>
+                    </div>
+                </div>
+                                
+                <div class="row">
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label for="username">Nickname:</label>
+                          <input type="text" class="form-control" placeholder="You will be addressed by this name" id="username" name="username" required>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label for="gender">Gender: <span>*</span></label>
+                          <select  class="form-control"  id="gender" name="gender" required>
+                              <option value="female">Male</option>
+                              <option value="male">Female</option>
+                              <option value="other">Other</option>
+                          </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label for="dob">Date of Birth: <span>*</span></label>
+                          <input type="date" class="form-control" id="dob" name="dob" value="2005-01-09"  min="" max="2005-01-09"required>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6">
+                        <div class="form-group">
+                          <label for="Mobile">Mobile Number: <span>*</span></label>
+                          <input type="tel" class="form-control"  id="Mobile" name="Mobile" size=10 required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="form-group">
+                        <label for="interests">Interests:</label>
+                        <textarea class="form-control" placeholder="sports, game development, etc" id="interests" rows="5"></textarea>
+                    </div>
+                </div>
+                <div>
+                    <div class="form-group">
+                        <label for="avatar">Upload a profile picture:</label>
+                        <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg">
+                    </div>
+                </div>
+        
+                <div>
+                    <input type="reset" class="btn btn-outline-dark" value="Reset">
+                    <input type="submit" class="btn btn-outline-success" value="Submit">
+                </div>
+            </form>
+
+        </div>
+        
+        <!-- jQuery first, then Bootstrap JS -->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
