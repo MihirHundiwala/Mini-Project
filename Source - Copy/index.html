@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/script.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+
+    <!---------------------------------------- Navbar ---------------------------------------->
+    <nav class="navbar navbar-expand-md fixed-top">
+
+        <a class="navbar-brand" href="#">Navbar</a>
+
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#collapse_target">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="collapse_target">
+            <div class="dropdown-divider"></div>
+            <ul class="navbar-nav mr-auto" id="nav_contents">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Stories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Facts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Book Now</a>
+                </li>
+            </ul>
+            <div class="dropdown-divider"></div>
+            <ul class="navbar-nav" id="logins">
+                <li class="nav-item">
+                    <button class="btn signin_btn" data-toggle="modal" data-target="#signinmodal" type="button">Sign In</button>
+                </li>
+                <li class="nav-item">
+                    <div data-toggle="modal" data-target="#signupmodal"><a class="signup_btn"><span>Sign Up</a></div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!---------------------------------------- Sign In Modal ---------------------------------------->
+    <div class="modal fade" id="signinmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <form class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Sign In</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label for="email"><b>Email</b></label>
+                    <input class="modalinputs" type="text" placeholder="Enter Email" name="email" required>
+                    <label for="psw"><b>Password</b></label>
+                    <input class="modalinputs" type="password" placeholder="Enter Password" name="psw" required>
+                </div>
+                <div class="modal-footer">
+                    <span>Don't have an Account?</span><button type="button" class="btn" data-dismiss="modal" data-toggle="modal" id="signmodalfooter" data-target="#signupmodal">Sign Up</button>
+                    <button type="submit" class="btn btn-success">Sign In</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!---------------------------------------- Sign Up Modal ---------------------------------------->
+    <div class="modal fade" id="signupmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <form class="modal-content" action="profile.html">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Sign Up</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <label for="email"><b>Email</b></label>
+                    <input class="modalinputs form-control" type="text" placeholder="Enter Email" name="email" required>
+
+                    <label for="psw"><b>Password</b></label>
+                    <input class="modalinputs" type="password" placeholder="Enter Password" name="psw" required>
+
+                    <label for="psw-repeat"><b>Repeat Password</b></label>
+                    <input class="modalinputs" type="password" placeholder="Repeat Password" name="psw-repeat" required>
+                </div>
+
+                <div class="modal-footer">
+                    <span>Already have an Account?</span>
+                    <button type="button" class="btn" data-dismiss="modal" data-toggle="modal" id="signmodalfooter" data-target="#signinmodal">Sign In</button>
+                    <button type="submit" class="btn btn-success">Sign Up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-------------------------------------------------------------------------------------------------->
+
+    <!-- image slider start -->
+    <div class="slider">
+        <div class="slides">
+            <!-- radio buttons start -->
+            <input type="radio" name="radio-btn" id="radio1">
+            <input type="radio" name="radio-btn" id="radio2">
+            <input type="radio" name="radio-btn" id="radio3">
+            <input type="radio" name="radio-btn" id="radio4">
+            <!-- radio buttons end -->
+
+            <!-- slide images start -->
+            <div class="slide first">
+                <img src="images/img1.jpg" alt="">
+            </div>
+            <div class="slide">
+                <img src="images/img2.jpg" alt="">
+            </div>
+            <div class="slide">
+                <img src="images/img3.jpg" alt="">
+            </div>
+            <div class="slide">
+                <img src="images/img4.jpg" alt="">
+            </div>
+            <!-- slide images start -->
+            <!-- automatic navigation start -->
+            <div class="navigation-auto">
+                <div class="auto-btn1"></div>
+                <div class="auto-btn2"></div>
+                <div class="auto-btn3"></div>
+                <div class="auto-btn4"></div>
+            </div>
+
+            <div class="navigation-manual">
+                <label for="radio1" class="manual-btn" id="manual-btn1"></label>
+                <label for="radio2" class="manual-btn" id="manual-btn2"></label>
+                <label for="radio3" class="manual-btn" id="manual-btn3"></label>
+                <label for="radio4" class="manual-btn" id="manual-btn4"></label>
+            </div>
+            <!-- automatic navigation end -->
+        </div>
+        <!-- manual navigation start -->
+        
+    </div>
+
+</body>
+
+</html>
