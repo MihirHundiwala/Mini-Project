@@ -1,0 +1,234 @@
+.player {
+    position: fixed;
+    bottom:0;
+    width: 100%;
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.801);
+    padding: 8px 0px;
+    height: 70px;
+}
+
+.player button {
+    padding: 5px 2px;
+    margin: 1px;
+}
+
+.player button:hover {
+    background: red;
+    color:black;
+}
+
+.left {
+    display: inline-block;
+    height: 100%;
+    float: left;
+    margin-left: 16px;
+    display: flex;
+}
+
+/*.left #logo {
+    font-size: 25px;
+    color: salmon;
+    display: inline-block;
+    margin-right: 20px;
+    float: left;
+    margin-top: 5px;
+}*/
+
+.left .track-img-con{
+    display:inline-block;
+    float:left;
+    box-shadow: 0 0 5px black;
+    height:48px;
+    width:48px;
+}
+
+#track_image{
+    height: 48px;
+    width: 48px;
+    /*float:left;*/
+}
+
+.middle {
+    /*float:left;*/
+    width: 100%;
+    margin-left: 20px;
+    margin-right: 110px;
+    display: inline-block;
+    position: relative;
+    /*background:lightblue;*/
+    /*display:flex;*/
+}
+
+.track-details-con {}
+
+.buttons {
+    width: 135px;
+    left: 45%;
+    margin: 0 auto;
+    margin-top: -5px;
+    position: absolute;
+    z-index: 3;
+}
+
+.middle button {
+    border: none;
+    height: 42px;
+    width: 42px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.3s;
+    background:none;
+    color:white;
+    display: inline;
+    outline: none;
+    box-shadow: 0 0 30px black;
+}
+
+#play{
+    background:red;
+}
+
+#next,
+#pre {
+    width: 38px;
+    height: 38px;
+    margin-top: 3%;
+}
+
+.middle #title,
+.middle #artist {
+    text-transform: capitalize;
+    color: white;
+    font-size: 17px;
+    display: inline-block;
+}
+
+.middle #artist {
+    margin-left: 5px;
+    /*margin-top: 3px;*/
+    /*font-size:14px;*/
+    font-size: 17px;
+}
+
+.middle .duration {
+    /*background-color: purple;*/
+    width: 95%;
+    margin-top: 8px;
+    display: flex;
+    transition: 0.05s;
+}
+
+#currenttime {
+    display: inline-block;
+    float: left;
+    margin-right: 10px;
+    color: white;
+}
+
+#totaltime {
+    display: inline-block;
+    float: right;
+    position: absolute;
+    right: 0;
+    margin-left: 10px;
+    color: white;
+}
+
+.middle input[type="range"] {
+    width: 100%;
+    -webkit-appearance: none;
+    outline: none;
+    height: 2.5px;
+    cursor: pointer;
+    margin-top: 16px;
+    margin-right: 20px;
+    transition: all ease-in-out 0.05s;
+}
+
+.middle input[type="range"]::-webkit-slider-runnable-track {
+    height: 2.5px;
+    border-radius: 5px;
+    transition: all ease-in-out 0.05s;
+}
+
+.middle input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 13px;
+    width: 13px;
+    margin-top: -5px;
+    background: red;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all ease-in-out 0.05s;
+}
+
+.right {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    margin-left: 15px;
+    margin-right: 20px;
+}
+
+.right .volume {
+    display: inline-block;
+    position: relative;
+    /*height:100%;*/
+    padding-top: 15px;
+}
+
+.right .volume #volume_icon {
+    cursor: pointer;
+    color: white;
+    font-size: 20px;
+    vertical-align: middle;
+}
+
+.right input[type=range] {
+    display: none;
+    /*-webkit-appearance:none;*/
+    /*background:none;*/
+    transform: rotate(-90deg);
+    position: absolute;
+    left: -53px;
+    bottom: 90px;
+    /*height:2px;*/
+    outline: none;
+}
+
+
+/*.right input[type=range]::-webkit-slider-runnable-track{
+	-webkit-appearance:none;
+	height:3px;
+	background:black;
+}
+
+.right input[type=range]::-webkit-slider-thumb{
+	-webkit-appearance:none;
+	height:14px;
+	width:14px;
+	border-radius: 50%;
+	margin-top:-5px;
+	background-color:salmon;
+}
+*/
+
+.right .volume:hover #volume_icon {
+    text-shadow: 0 0 25px white;
+}
+
+.right .volume:hover input[type=range] {
+    display: inline-block;
+}
+
+.right #queue_icon {
+    cursor: pointer;
+    color: white;
+    width: 21px;
+    height:21px;
+    display: inline-block;
+    margin-left: 20px;
+    margin-top: -3px;
+}

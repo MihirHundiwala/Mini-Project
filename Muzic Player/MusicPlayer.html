@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <script src="js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="css/fontawesome.min.css" />
+    <script src="https://kit.fontawesome.com/555f71f953.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="css/navbar-footer.css" />
+    <link rel="stylesheet" href="css/home-page.css" />
+    <link rel="stylesheet" type="text/css" href="css/musicplayer.css">
+
+    <title>Music Player</title>
+
+</head>
+
+<body>
+
+    <!---------------------------------------- Navbar ---------------------------------------->
+    <nav class="navbar navbar-expand-md fixed-top">
+
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#collapse_target">
+            <i class="fas fa-bars"></i><!-- <span class="navbar-toggler-icon"></span> -->
+        </button>
+
+        <a class="navbar-brand mr-auto" href="#"><img src="images/Logo.png" alt="" id="logo"></a>
+
+        <div class="collapse navbar-collapse" id="collapse_target">
+            <div class="dropdown-divider"></div>
+            <ul class="navbar-nav mr-auto" id="nav_contents_left">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="Categories" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
+                    <div class="dropdown-menu" aria-labelledby="Categories">
+                        <a class="dropdown-item" href="#">Romance</a>
+                        <a class="dropdown-item" href="#">Bollywood Party</a>
+                        <a class="dropdown-item" href="#">Pop</a>
+                        <a class="dropdown-item" href="#">Soulful</a>
+                        <a class="dropdown-item" href="#">Hip-Hop, Rap</a>
+                        <a class="dropdown-item" href="#">Old Songs</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="Playlists" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Playlists</a>
+                    <div class="dropdown-menu" aria-labelledby="Playlists">
+                        <a class="dropdown-item" href="#">My Playlist</a>
+                        <a class="dropdown-item" href="#">Popular Songs</a>
+                        <a class="dropdown-item" href="#">Recommended Songs</a>
+                    </div>
+                </li>
+
+            </ul>
+            <ul class="navbar-nav" id="nav_contents_right">
+                <li class="nav-item">
+                    <form class="form-inline my-2 my-lg-0">
+                        <button class="btn" type="submit" id="search-btn"><img src="images/Search Logo.png" id="search-logo" alt=""></button>
+                        <input class="form-control" type="search" placeholder="Search for the music you love!" aria-label="Search">
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <button class="btn signin_btn" data-toggle="modal" data-target="#signinmodal" type="button">Sign In</button>
+                </li>
+                <li class="nav-item">
+                    <div data-toggle="modal" data-target="#signupmodal"><a class="signup_btn"><span>Sign Up</a></div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!---------------------------------------- Sign In Modal ---------------------------------------->
+    <div class="modal fade" id="signinmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <form class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Sign In</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label for="email"><b>Email</b></label>
+                    <input class="modalinputs" type="text" placeholder="Enter Email" name="email" required>
+                    <label for="psw"><b>Password</b></label>
+                    <input class="modalinputs" type="password" placeholder="Enter Password" name="psw" required>
+                </div>
+                <div class="modal-footer">
+                    <span>Don't have an Account?</span><button type="button" class="btn" data-dismiss="modal" data-toggle="modal" id="signmodalfooter" data-target="#signupmodal">Sign Up</button>
+                    <button type="submit" class="btn btn-success">Sign In</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!---------------------------------------- Sign Up Modal ---------------------------------------->
+    <div class="modal fade" id="signupmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <form class="modal-content" action="profile.html">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Sign Up</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <label for="email"><b>Email</b></label>
+                    <input class="modalinputs form-control" type="text" placeholder="Enter Email" name="email" required>
+
+                    <label for="psw"><b>Password</b></label>
+                    <input class="modalinputs" type="password" placeholder="Enter Password" name="psw" required>
+
+                    <label for="psw-repeat"><b>Repeat Password</b></label>
+                    <input class="modalinputs" type="password" placeholder="Repeat Password" name="psw-repeat" required>
+                </div>
+
+                <div class="modal-footer">
+                    <span>Already have an Account?</span>
+                    <button type="button" class="btn" data-dismiss="modal" data-toggle="modal" id="signmodalfooter" data-target="#signinmodal">Sign In</button>
+                    <button type="submit" class="btn btn-success">Sign Up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="parallax"></div>
+
+    <!---------------------------------------- Site Footer ---------------------------------------->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <h6>About</h6>
+                    <p class="text-justify">T-Space provides free therapy sessions to teens with professional therapists. Along with therapy, we also provide teens with a space to communicate freely - <a href="">Stories</a> where you can share your trauma and free your hearts
+                        off the burden. Browse through our <a href="">Facts</a> page and get info on various mental health problems.</p>
+                </div>
+
+                <div class="col-xs-4 col-md-2">
+                    <h6>Quick Links</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Stories</a></li>
+                        <li><a href="#">Facts</a></li>
+                        <li><a href="#">Therapy</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-xs-8 col-md-4">
+                    <h6>Contact Us</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">Email - team.tspace@gmail.com</a></li>
+                        <li><a href="#">Address - Mumbai, India</a></li>
+                        <li><a href="#">Mobile - +91 1234567890</a></li>
+                    </ul>
+                </div>
+
+            </div>
+            <hr>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-sm-6 col-xs-12">
+                    <p class="copyright-text">Copyright &copy; 2021 All Rights Reserved by
+                        <a href="#">T-Space</a>
+                    </p>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <ul class="social-icons">
+                        <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a class="dribbble" href="#"><i class="fa fa-instagram"></i></a></li>
+                        <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+<!--     <nav class="navbar navbar-expand-md fixed-bottom"> -->
+        <div class="player">
+            <div class="left">
+<!--                 <span id="logo"><i class="fa fa-music"></i></span> -->
+                <div class="track-img-con">
+                    <img id="track_image">
+                </div>
+            </div>
+
+            <div class="middle">
+
+                <div class="buttons">
+                    <button onclick="previous_song()" id="pre"><i class="fa fa-step-backward" aria-hidden="true"></i></button>
+                    <button onclick="justplay()" id="play"><i class="fa fa-play" aria-hidden="true"></i></button>
+                    <button onclick="next_song()" id="next"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
+                </div>
+
+                <div class="track-details-con">
+                    <div id="title">song title (album)</div>
+                    <div id="artist">- song artist</div>
+                </div>
+
+                <div class="duration">
+                    <label id="currenttime" value="">00:00</label>
+                    <input type="range" min="0" max="100" value="0" step="0.1" id="duration_slider" onchange="change_duration()">
+                    <label id="totaltime" value="">00:00</label>
+                </div>
+
+            </div>
+
+            <div class="right">
+                <div class="volume">
+                    <i class="fas fa-volume-up" aria-hidden="true" onclick="mute_sound()" id="volume_icon"></i>
+                    <input type="range" min="0" max="100" value="100" onchange="volume_change()" id="volume">
+                </div>
+                <span><img src="images/queue.png" id="queue_icon" ></div>
+        </div>
+    </div>
+    <!-- </nav> -->
+        
+
+    <script src="js/home-page.js"></script>
+    <script src="js/musicplayerscript.js"></script>
+
+</body>
+
+</html>
