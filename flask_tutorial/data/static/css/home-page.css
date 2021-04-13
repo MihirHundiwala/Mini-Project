@@ -1,7 +1,7 @@
 body,
 html {
     height: 100%;
-    background-image: url("{{url_for('static',filename='pictures/BackgroundPurple.png')}}");
+    background-image: url('../images/BackgroundPurple.jpg');
     height: 100%;
     background-attachment: fixed;
     background-position: center;
@@ -16,6 +16,10 @@ html {
     padding-right: 30px;
     display: flex;
     width: 100%;
+}
+
+.headings>h3 {
+    color: #ffffff;
 }
 
 .headings>a {

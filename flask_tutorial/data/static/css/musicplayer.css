@@ -1,37 +1,29 @@
-/* *{
-	margin: 0;
-	padding: 0;
-	font-family: Arial, Helvetica, sans-serif;
-} */
-
-
-/*body{
-	height: 100vh;
-	width: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}*/
-
-.player {
-    padding-bottom: 0 !important;
+#player_nav {
+    background-color: rgba(0, 0, 0, 0.801);
+    font-family: 'Open Sans', sans-serif;
+    padding: 0 !important;
+    padding-top: 10px !important;
 }
 
-.main {
+
+/* .player {
+    bottom: 0;
     width: 100%;
     display: flex;
-    background-color: #343a40;
+    background-color: rgba(0, 0, 0, 0.801);
     padding: 8px 0px;
-    height: 50px;
-}
+    height: 70px;
+    z-index: 3;
+} */
 
-.main button {
+.player button {
     padding: 5px 2px;
     margin: 1px;
 }
 
-.main button:hover {
-    box-shadow: 0 0 10px black;
+.player button:hover {
+    background: red;
+    color: black;
 }
 
 .left {
@@ -42,33 +34,34 @@
     display: flex;
 }
 
-.left #logo {
+
+/*.left #logo {
     font-size: 25px;
     color: salmon;
     display: inline-block;
     margin-right: 20px;
     float: left;
-    margin-top: 10px;
-}
+    margin-top: 5px;
+}*/
 
 .left .track-img-con {
     display: inline-block;
     float: left;
-}
-
-.left img {
+    box-shadow: 0 0 5px black;
     height: 48px;
     width: 48px;
-    border-radius: 5px;
-    background-color: white;
-    box-shadow: 0 0 10px salmon;
-    float: left;
+}
+
+#track_image {
+    height: 48px;
+    width: 48px;
+    /*float:left;*/
 }
 
 .middle {
     /*float:left;*/
     width: 100%;
-    margin-left: 15px;
+    margin-left: 20px;
     margin-right: 110px;
     display: inline-block;
     position: relative;
@@ -95,10 +88,15 @@
     cursor: pointer;
     font-size: 15px;
     transition: 0.3s;
-    background: salmon;
+    background: none;
+    color: white;
     display: inline;
     outline: none;
     box-shadow: 0 0 30px black;
+}
+
+#play {
+    background: red;
 }
 
 #next,
@@ -125,9 +123,10 @@
 
 .middle .duration {
     /*background-color: purple;*/
-    width: 96%;
-    margin-top: 14px;
+    width: 95%;
+    margin-top: 8px;
     display: flex;
+    transition: 0.05s;
 }
 
 #currenttime {
@@ -150,16 +149,17 @@
     width: 100%;
     -webkit-appearance: none;
     outline: none;
-    height: 2px;
+    height: 2.5px;
     cursor: pointer;
-    margin-top: 12px;
+    margin-top: 16px;
     margin-right: 20px;
+    transition: all ease-in-out 0.05s;
 }
 
 .middle input[type="range"]::-webkit-slider-runnable-track {
-    /*-webkit-appearance: none;*/
-    height: 2px;
-    background: black;
+    height: 2.5px;
+    border-radius: 5px;
+    transition: all ease-in-out 0.05s;
 }
 
 .middle input[type="range"]::-webkit-slider-thumb {
@@ -167,9 +167,10 @@
     height: 13px;
     width: 13px;
     margin-top: -5px;
-    background: salmon;
+    background: red;
     border-radius: 50%;
     cursor: pointer;
+    transition: all ease-in-out 0.05s;
 }
 
 .right {
@@ -178,8 +179,6 @@
     right: 0;
     margin-left: 15px;
     margin-right: 20px;
-    /*padding-top:15px;*/
-    /*height:100%;*/
 }
 
 .right .volume {
@@ -193,6 +192,7 @@
     cursor: pointer;
     color: white;
     font-size: 20px;
+    vertical-align: middle;
 }
 
 .right input[type=range] {
@@ -235,7 +235,9 @@
 .right #queue_icon {
     cursor: pointer;
     color: white;
-    font-size: 20px;
+    width: 21px;
+    height: 21px;
     display: inline-block;
     margin-left: 20px;
+    margin-top: -3px;
 }

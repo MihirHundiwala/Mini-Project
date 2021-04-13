@@ -5,9 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta id="my-data" data-playlist="{{playli}}">
     <script src="{{url_for('static',filename='js/jquery.min.js')}}"></script>
 
     <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css')}}" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
     <script src="{{url_for('static',filename='js/bootstrap.bundle.min.js')}}"></script>
 
     <link rel="stylesheet" href="{{url_for('static',filename='css/fontawesome.min.css')}}" />
@@ -20,7 +22,6 @@
     <link rel="stylesheet" href="{{url_for('static',filename='css/navbar-footer.css')}}" />
     <link rel="stylesheet" href="{{url_for('static',filename='css/home-page.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/musicplayer.css')}}">
-    <script src="{{url_for('static',filename='js/musicplayerscript.js')}}"></script>
 
     <title>Music Player</title>
 </head>
@@ -34,7 +35,7 @@
             <i class="fas fa-bars"></i><!-- <span class="navbar-toggler-icon"></span> -->
         </button>
 
-        <a class="navbar-brand mr-auto" href="#"><img src="{{url_for('static',filename='pictures/Logo.png')}}" alt="" id="logo"></a>
+        <a class="navbar-brand mr-auto" href="#"><img src="{{url_for('static',filename='images/Logo.png')}}" alt="" id="logo"></a>
 
         <div class="collapse navbar-collapse" id="collapse_target">
             <div class="dropdown-divider"></div>
@@ -66,17 +67,26 @@
             </ul>
             <ul class="navbar-nav" id="nav_contents_right">
                 <li class="nav-item">
-                    <form class="form-inline my-2 my-lg-0">
-                        <button class="btn" type="submit" id="search-btn"><img src="{{url_for('static',filename='pictures/Search Logo.png')}}" id="search-logo" alt=""></button>
-                        <input class="form-control" type="search" placeholder="Search for the music you love!" aria-label="Search">
+                    <form class="form-inline my-2 my-lg-0" method="POST">
+                        <button class="btn" name="search" type="submit" id="search-btn"><img
+                                src="{{url_for('static',filename='images/Search Logo.png')}}" id="search-logo"
+                                alt=""></button>
+                        <input class="form-control" name="songsearch" type="search" placeholder="Search for the music you love!" aria-label="Search">
                     </form>
                 </li>
+                {% if session['logged_in'] %}
                 <li class="nav-item">
-                    <button class="btn signin_btn" data-toggle="modal" data-target="#signinmodal" type="button">Sign In</button>
+                    <a class="btn signin_btn" href="{{url_for('logout')}}">Sign Out</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <button class="btn signin_btn" data-toggle="modal" data-target="#signinmodal" type="button">Sign
+                        In</button>
                 </li>
                 <li class="nav-item">
                     <div data-toggle="modal" data-target="#signupmodal"><a class="signup_btn"><span>Sign Up</a></div>
                 </li>
+                {% endif %}
             </ul>
         </div>
     </nav>
@@ -88,10 +98,9 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Sign In</h5>
                     {% if s %}
-                        <p>{{s}}</p>
-                    {% endif %}
-                    {% if us %}
-                        <p>{{us}}</p>
+                    <p>{{s}}</p>
+                    {% endif %} {% if us %}
+                    <p>{{us}}</p>
                     {% endif %}
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -115,13 +124,12 @@
     <div class="modal fade" id="signupmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <form class="modal-content" method="POST">
-                <div class="modal-header" >
+                <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLongTitle">Sign Up</h5>
                     {% if s %}
-                        <p>{{s}}</p>
-                    {% endif %}
-                    {% if us %}
-                        <p>{{us}}</p>
+                    <p>{{s}}</p>
+                    {% endif %} {% if us %}
+                    <p>{{us}}</p>
                     {% endif %}
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -170,66 +178,20 @@
         </div>
     </div>
 
-    <div class="carousel-wrapper">
-
-    </div>
-
     <div class="headings">
         <h3>Soul</h3>
         <a href="#">More</a>
     </div>
     <div class="owl-carousel owl-theme" id="soul">
-        <div class="item">
-            <img src="https://picsum.photos/640/480?pic=1" />
-            <span class="img-text">nightlife</span>
-        </div>
-        <div class="item">
-            <img src="https://picsum.photos/640/480?pic=2" />
-            <span class="img-text">abstract</span>
-        </div>
-        <div class="item">
-            <img src="https://picsum.photos/640/480?pic=3" />
-            <span class="img-text">animals</span>
-        </div>
-        <div class="item">
-            <img src="https://picsum.photos/640/480?pic=4" />
-            <span class="img-text">nature</span>
-        </div>
+        {% for lem in sli %}
         <div class="item">
             <img src="https://picsum.photos/640/480?pic=5" />
-            <span class="img-text">business</span>
+            <span class="img-text">{{lem}}</span>
         </div>
+        {% endfor %}
         <div class="item">
-            <img src="https://picsum.photos/640/480?pic=6" />
-            <span class="img-text">cats</span>
-        </div>
-        <div class="item">
-            <img src="https://picsum.photos/640/480?pic=7" />
-            <span class="img-text">city</span>
-        </div>
-        <div class="item">
-            <img src="https://picsum.photos/640/480?pic=8" />
-            <span class="img-text">food</span>
-        </div>
-        <div class="item">
-            <img src="https://picsum.photos/640/480?pic=9" />
-            <span class="img-text">fashion</span>
-        </div>
-        <div class="item">
-            <img src="https://picsum.photos/640/480?pic=10" />
-            <span class="img-text">people</span>
-        </div>
-        <div class="item">
-            <img src="https://picsum.photos/640/480?pic=11" />
-            <span class="img-text">sports</span>
-        </div>
-        <div class="item">
-            <img src="https://picsum.photos/640/480?pic=12" />
-            <span class="img-text">technics</span>
-        </div>
-        <div class="item">
-            <img src="https://picsum.photos/640/480?pic=13" />
-            <span class="img-text">transport</span>
+            <img src="https://picsum.photos/640/480?pic=5" />
+            <span class="img-text">life</span>
         </div>
     </div>
 
@@ -580,8 +542,48 @@
         </div>
     </footer>
 
+    <nav class="navbar navbar-expand-md fixed-bottom" id="player_nav">
+        <!-- <div class="player"> -->
+        <div class="left">
+            <div class="track-img-con">
+                <img id="track_image" src="{{url_for('static',filename='images/trackimg.jpg')}}">
+            </div>
+        </div>
+
+        <div class="middle">
+
+            <div class="buttons">
+                <button onclick="previous_song()" id="pre"><i class="fa fa-step-backward"
+                        aria-hidden="true"></i></button>
+                <button onclick="justplay()" id="play"><i class="fa fa-play" aria-hidden="true"></i></button>
+                <button onclick="next_song()" id="next"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
+            </div>
+
+            <div class="track-details-con">
+                <div id="title">song title (album)</div>
+                <div id="artist">- song artist</div>
+            </div>
+
+            <div class="duration">
+                <label id="currenttime" value="">00:00</label>
+                <input type="range" min="0" max="100" value="0" step="0.1" id="duration_slider" onchange="change_duration()">
+                <label id="totaltime" value="">00:00</label>
+            </div>
+
+        </div>
+
+        <div class="right">
+            <div class="volume">
+                <i class="fas fa-volume-up" aria-hidden="true" onclick="mute_sound()" id="volume_icon"></i>
+                <input type="range" min="0" max="100" value="100" onchange="volume_change()" id="volume">
+            </div>
+            <span><img src="{{url_for('static',filename='images/queue.png')}}" id="queue_icon">
+        </div>
+    <!-- </div> -->
+</nav>
     <script src="{{url_for('static',filename='js/owl.carousel.min.js')}}"></script>
     <script src="{{url_for('static',filename='js/home-page.js')}}"></script>
+    <script src="{{url_for('static',filename='js/musicplayerscript.js')}}"></script>
 
 
 </body>

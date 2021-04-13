@@ -6,6 +6,11 @@ let artist = document.querySelector('#artist');
 let recent_volume= document.querySelector('#volume');
 let slider = document.getElementById('duration_slider');
 let track_image = document.querySelector('#track_image');
+let currenttime = document.querySelector('#currenttime');
+let totaltime = document.querySelector('#totaltime');
+let All_song = $('#my-data').data('playlist');
+// console.log(All_song);
+// let All_song = document.getElementById('list');
 // let show_duration = document.querySelector('#show_duration');
 // let volume_show = document.querySelector('#volume_show');
 // let auto_play = document.querySelector('#auto');
@@ -23,59 +28,59 @@ let track = document.createElement('audio');
 
 
 //All songs list
-let All_song = [
-   {
-     name: "Kaun Hoon Main",
-     artist: "XYZ",
-     path: "C:/Users/RAHUL/Music/- Prince - Kaun Hoon Main.mp3",
-     img: "img/img1.jpg",
-     singer: "1"
-   },
-   {
-     name: "second song",
-     path: "music/song2.mp3",
-     img: "img/img2.jpg",
-     singer: "2"
-   },
-   {
-     name: "third song",
-     path: "music/song3.mp3",
-     img: "img/img3.jpg",
-     singer: "3"
-   },
-   {
-     name: "fourth song",
-     path: "music/song4.mp3",
-     img: "img/img4.jpg",
-     singer: "4"
-   },
-   {
-     name: "fifth song",
-     path: "music/song5.mp3",
-     img: "img/img5.jpg",
-     singer: "5"
-   }
-];
+// let All_song = [
+//    {
+//      name: "No Control",
+//      artist: "",
+//      path: "https://firebasestorage.googleapis.com/v0/b/music-player-3dac7.appspot.com/o/Music%2FNo%20Control.mp3?alt=media&token=a53e93d0-b672-4f0d-b701-ff69c6343a95",
+//      img: "images/trackimg.jpg",
+//      singer: "One Direction"
+//    },
+//    {
+//      name: "Circles",
+//      path: "https://firebasestorage.googleapis.com/v0/b/music-player-3dac7.appspot.com/o/Music%2FCircles.mp3?alt=media&token=8f4a95f5-30a2-49eb-86cd-b3c4b26ed756",
+//      img: "images/trackimg.jpg",
+//      singer: "Post Malone"
+//    },
+//    {
+//      name: "Havana",
+//      path: "https://firebasestorage.googleapis.com/v0/b/music-player-3dac7.appspot.com/o/Music%2FHavana.mp3?alt=media&token=9218052f-136d-4c07-aa9f-425c3bb64823",
+//      img: "images/trackimg.jpg",
+//      singer: "Camila Cabello"
+//    },
+//    {
+//      name: "Shape Of You",
+//      path: "https://firebasestorage.googleapis.com/v0/b/music-player-3dac7.appspot.com/o/Music%2FShape%20Of%20You.mp3?alt=media&token=00c7a60f-8fc4-4ddf-95d2-135aa14f4453",
+//      img: "images/trackimg.jpg",
+//      singer: "Ed Sheeran"
+//    },
+//    {
+//      name: "Smack that",
+//      path: "https://firebasestorage.googleapis.com/v0/b/music-player-3dac7.appspot.com/o/Music%2FSmack%20that.mp3?alt=media&token=1a2fd316-b02a-4688-8249-8c0d4c8effb7",
+//      img: "images/trackimg.jpg",
+//      singer: "Akon ft.Eminem"
+//    }
+// ];
 
 
 // All functions
-
 
 // function load the track
 function load_track(index_no){
 	clearInterval(timer);
 	reset_slider();
 
-	track.src = All_song[index_no].path;
-	title.innerHTML = All_song[index_no].name;	
+	track.src = All_song[index_no]['Path'];
+	title.innerHTML = All_song[index_no]['Title'];
 	// artist.innerHTML = All_song[index_no].artist;
-	track_image.src = All_song[index_no].img;
-    artist.innerHTML = All_song[index_no].singer;
+	// track_image.src = All_song[index_no].img;
+    artist.innerHTML = " - "+All_song[index_no]['Artist'];
     track.load();
-
 	timer = setInterval(range_slider ,1000);
+	//totaltime.innerHTML=(Math.floor(track.duration/60)).toLocaleString('en-US',{minimumIntegerDigits:2})+':'+(Math.floor(track.duration)%60).toLocaleString('en-US',{minimumIntegerDigits:2});
+
 	// total.innerHTML = All_song.length;
-	// present.innerHTML = index_no + 1;
+	// present.innerHTML = index_no + 1;	
 }
 
 load_track(index_no);
@@ -90,11 +95,14 @@ function mute_sound(){
 
 
 // checking.. the song is playing or not
- function justplay(){
- 	if(Playing_song==false){
+ function justplay()
+ {
+ 	if(Playing_song==false)
+ 	{
  		playsong();
-
- 	}else{
+ 	}
+ 	else
+ 	{
  		pausesong();
  	}
  }
@@ -110,6 +118,7 @@ function playsong(){
   track.play();
   Playing_song = true;
   play.innerHTML = '<i class="fa fa-pause" aria-hidden="true"></i>';
+  totaltime.innerHTML=(Math.floor(track.duration/60)).toLocaleString('en-US',{minimumIntegerDigits:2})+':'+(Math.floor(track.duration)%60).toLocaleString('en-US',{minimumIntegerDigits:2});
 }
 
 //pause song
@@ -122,27 +131,32 @@ function pausesong(){
 
 // next song
 function next_song(){
-	if(index_no < All_song.length - 1){
+	if(index_no < All_song.length - 1)
+	{
 		index_no += 1;
 		load_track(index_no);
 		playsong();
-	}else{
+
+	}
+	else
+	{
 		index_no = 0;
 		load_track(index_no);
 		playsong();
-
 	}
 }
 
 
 // previous song
 function previous_song(){
-	if(index_no > 0){
+	if(index_no > 0)
+	{
 		index_no -= 1;
 		load_track(index_no);
 		playsong();
-
-	}else{
+	}
+	else
+	{
 		index_no = All_song.length;
 		load_track(index_no);
 		playsong();
@@ -162,35 +176,22 @@ function change_duration(){
 	track.currentTime = slider_position;
 }
 
-// autoplay function
-// function autoplay_switch(){
-// 	if (autoplay==1){
-//        autoplay = 0;
-//        auto_play.style.background = "rgba(255,255,255,0.2)";
-// 	}else{
-//        autoplay = 1;
-//        auto_play.style.background = "#FF8A65";
-// 	}
-// }
-
-
 function range_slider(){
 	let position = 0;
         
         // update slider position
-		if(!isNaN(track.duration)){
+		if(!isNaN(track.duration))
+		{
 		   position = track.currentTime * (100 / track.duration);
-		   slider.value =  position;
-	      }
-
-       
+		   slider.style.background = 'linear-gradient(to right,#FF2D2D 0%, #FF2D2D ' + position + '%, #fff ' + position + '%,white 100%)'
+		   slider.value = position;
+		   currenttime.innerHTML=(Math.floor(track.currentTime/60)).toLocaleString('en-US',{minimumIntegerDigits:2})+':'+(Math.floor(track.currentTime)%60).toLocaleString('en-US',{minimumIntegerDigits:2});
+		   totaltime.innerHTML=(Math.floor(track.duration/60)).toLocaleString('en-US',{minimumIntegerDigits:2})+':'+(Math.floor(track.duration)%60).toLocaleString('en-US',{minimumIntegerDigits:2});
+       	}
        // function will run when the song is over
-       if(track.ended){
-       	 play.innerHTML = '<i class="fa fa-play" aria-hidden="true"></i>';
-           if(autoplay==1){
-		       index_no += 1;
-		       load_track(index_no);
-		       playsong();
-           }
-	    }
-     }
+       if(track.ended)
+       {
+       	 play.innerHTML = '<i class="fa fa-pause" aria-hidden="true"></i>';
+         next_song();
+	   }
+}
