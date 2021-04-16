@@ -1,4 +1,9 @@
 $(document).ready(function() {
+
+    $(".btn").click(function() {
+        $("input[type='text']").toggleClass("active");
+    });
+
     var slider = $('#categories');
 
     slider.owlCarousel({

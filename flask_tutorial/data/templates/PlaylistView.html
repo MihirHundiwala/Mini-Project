@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beat Music</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="css/play.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head> -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{{url_for('static',filename='js/jquery.min.js')}}"></script>
+
+    <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css')}}" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <script src="{{url_for('static',filename='js/bootstrap.bundle.min.js')}}"></script>
+
+    <link rel="stylesheet" href="{{url_for('static',filename='css/fontawesome.min.css')}}" />
+    <script src="https://kit.fontawesome.com/555f71f953.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="{{url_for('static',filename='css/navbar-footer.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static',filename='css/play.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/musicplayer.css')}}">
+
+    <title>Music Player</title>
+</head>
+
+<body>
+
+    <!---------------------------------------- Navbar ---------------------------------------->
+    <nav class="navbar navbar-expand-md fixed-top">
+
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#collapse_target">
+            <i class="fas fa-bars"></i><!-- <span class="navbar-toggler-icon"></span> -->
+        </button>
+
+        <a class="navbar-brand mr-auto" href="#"><img src="{{url_for('static',filename='images/Logo.png')}}" alt="" id="logo"></a>
+
+        <div class="collapse navbar-collapse" id="collapse_target">
+            <div class="dropdown-divider"></div>
+            <ul class="navbar-nav mr-auto" id="nav_contents_left">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="Categories" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
+                    <div class="dropdown-menu" aria-labelledby="Categories">
+                        <a class="dropdown-item" href="#">Romance</a>
+                        <a class="dropdown-item" href="#">Bollywood Party</a>
+                        <a class="dropdown-item" href="#">Pop</a>
+                        <a class="dropdown-item" href="#">Soulful</a>
+                        <a class="dropdown-item" href="#">Hip-Hop, Rap</a>
+                        <a class="dropdown-item" href="#">Old Songs</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="Playlists" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Playlists</a>
+                    <div class="dropdown-menu" aria-labelledby="Playlists">
+                        <a class="dropdown-item" href="{{url_for('playlist')}}">My Playlist</a>
+                        <a class="dropdown-item" href="#">Popular Songs</a>
+                        <a class="dropdown-item" href="#">Recommended Songs</a>
+                    </div>
+                </li>
+
+            </ul>
+            <ul class="navbar-nav" id="nav_contents_right">
+                <li class="nav-item">
+                    <form class="form-inline my-2 my-lg-0">
+                        <button class="btn" type="submit" id="search-btn"><img
+                                src="{{url_for('static',filename='images/Search Logo.png')}}" id="search-logo"
+                                alt=""></button>
+                        <input class="form-control" type="search" placeholder="Search for the music you love!" aria-label="Search">
+                    </form>
+                </li>
+                {% if session['logged_in'] %}
+                <li class="nav-item">
+                    <a class="btn signin_btn" href="{{url_for('logout')}}">Sign Out</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <button class="btn signin_btn" data-toggle="modal" data-target="#signinmodal" type="button">Sign
+                        In</button>
+                </li>
+                <li class="nav-item">
+                    <div data-toggle="modal" data-target="#signupmodal"><a class="signup_btn"><span>Sign Up</a></div>
+                </li>
+                {% endif %}
+            </ul>
+
+            <ul class="navbar-nav" id="s-nav_contents_right">
+                <li class="nav-item searchbar">
+                    <input type="text" placeholder="Search for the music you love!" aria-label="Search">
+                    <button class="btn" type="submit" id="s-search-btn"><img src="{{url_for('static',filename='images/Search Logo.png')}}" id="s-search-logo" alt=""></button>
+                </li>
+                <li class="nav-item dropdown dropleft">
+                    {% if session['logged_in'] %}
+                    <a class="btn signin_btn" href="{{url_for('logout')}}">Sign Out</a> {% else %}
+                    <a class="nav-link dropdown-toggle" href="#" id="Login_btns" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i></a>
+                    <div class="dropdown-menu" aria-labelledby="Login_btns">
+                        <button class="btn signin_btn" data-toggle="modal " data-target="#signinmodal " type="button ">Sign In</button>
+                        <div data-toggle="modal " data-target="#category_choice "><a class="signup_btn "><span>Sign Up</a></div>
+                    </div>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-3 fixed-col">
+                <img src="https://picsum.photos/640/480?pic=10" class="cover" />
+                <br><br>
+                <div>
+                    <p class="pup">Recommended Playlists</p>
+                </div>
+                <div class="row artipad">
+                    <div class="col-1.5">
+                        <img src="https://picsum.photos/640/480?pic=10" class="roundcov" />
+                    </div>
+                    <div class="col-8 arti">
+                        <p class="pname">Playlist Name</p>
+                    </div>
+                </div>
+                <div class="row artipad">
+                    <div class="col-1.5">
+                        <img src="https://picsum.photos/640/480?pic=10" class="roundcov" />
+                    </div>
+                    <div class="col-8 arti">
+                        <p class="pname">Playlist Name</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-8 song-cont">
+                <h2 class="head smleft">{{sli[0][0]['Genre']}}</h2>
+                <ul class="line smleft pdown">
+                    <li>20 songs</li>
+                    <li>75 min</li>
+                </ul><br><br>
+                <button class="playbtn btn-default"><i class="fa fa-play" aria-hidden="true" style="padding-right: 5px;"></i>Play Songs</button>
+                <br><br> {% for lem in sli[0] %}
+                <div class="row pad">
+                    <div class="col-1.5">
+                        <img src="https://picsum.photos/640/480?pic=10" class="songcov" />
+                    </div>
+                    <div class="col-10 nopad">
+                        <ul class="navbar nav ml-auto" id="songlist">
+                            <li>
+                                <p class="pup">{{lem['Title']}}</p>
+                                <p class="pdown">{{lem['Artist']}} - {{lem['Album']}}</p>
+                            </li>
+                            <li>
+                                <div class="dropdown">
+                                    <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-v more" aria-hidden="true"></i>
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#">Play Next</a>
+                                        <a class="dropdown-item" href="#">Add to Queue</a>
+                                        <a class="dropdown-item" href="#">Add to Playlist</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <!-- <div class="row pad">
+                    <div class="col-1.5">
+                        <img src="https://picsum.photos/640/480?pic=10" class="songcov" />
+                    </div>
+                    <div class="col-10 nopad">
+                        <ul class="navbar nav ml-auto">
+                            <li>
+                                <p class="pup">Song Name</p>
+                                <p class="pdown">Artist - Album</p>
+                            </li>
+                            <li>
+                                <div class="dropdown">
+                                    <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-v more" aria-hidden="true"></i>
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#">Play Next</a>
+                                        <a class="dropdown-item" href="#">Add to Queue</a>
+                                        <a class="dropdown-item" href="#">Add to Playlist</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row pad">
+                    <div class="col-1.5">
+                        <img src="https://picsum.photos/640/480?pic=10" class="songcov" />
+                    </div>
+                    <div class="col-10 nopad">
+                        <ul class="navbar nav ml-auto">
+                            <li>
+                                <p class="pup">Song Name</p>
+                                <p class="pdown">Artist - Album</p>
+                            </li>
+                            <li>
+                                <div class="dropdown">
+                                    <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-v more" aria-hidden="true"></i>
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#">Play Next</a>
+                                        <a class="dropdown-item" href="#">Add to Queue</a>
+                                        <a class="dropdown-item" href="#">Add to Playlist</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row pad">
+                    <div class="col-1.5">
+                        <img src="https://picsum.photos/640/480?pic=10" class="songcov" />
+                    </div>
+                    <div class="col-10 nopad">
+                        <ul class="navbar nav ml-auto">
+                            <li>
+                                <p class="pup">Song Name</p>
+                                <p class="pdown">Artist - Album</p>
+                            </li>
+                            <li>
+                                <div class="dropdown">
+                                    <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-v more" aria-hidden="true"></i>
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#">Play Next</a>
+                                        <a class="dropdown-item" href="#">Add to Queue</a>
+                                        <a class="dropdown-item" href="#">Add to Playlist</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-md fixed-bottom" id="player_nav">
+        <!-- <div class="player"> -->
+        <div class="left">
+            <div class="track-img-con">
+                <img id="track_image" src="{{url_for('static',filename='images/trackimg.jpg')}}">
+            </div>
+        </div>
+
+        <div class="middle">
+
+            <div class="buttons">
+                <button onclick="previous_song()" id="pre"><i class="fa fa-step-backward"
+                        aria-hidden="true"></i></button>
+                <button onclick="justplay()" id="play"><i class="fa fa-play" aria-hidden="true"></i></button>
+                <button onclick="next_song()" id="next"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
+            </div>
+
+            <div class="track-details-con">
+                <div id="title">song title (album)</div>
+                <div id="artist">- song artist</div>
+            </div>
+
+            <div class="duration">
+                <label id="currenttime" value="">00:00</label>
+                <input type="range" min="0" max="100" value="0" step="0.1" id="duration_slider" onchange="change_duration()">
+                <label id="totaltime" value="">00:00</label>
+            </div>
+
+        </div>
+
+        <div class="right">
+            <div class="volume">
+                <i class="fas fa-volume-up" aria-hidden="true" onclick="mute_sound()" id="volume_icon"></i>
+                <input type="range" min="0" max="100" value="100" onchange="volume_change()" id="volume">
+            </div>
+            <span><img src="{{url_for('static',filename='images/queue.png')}}" id="queue_icon">
+        </div>
+
+    </nav>
+
+    <script>
+        $(document).ready(function() {
+
+            $(".btn").click(function() {
+                $("input[type='text']").toggleClass("active");
+            });
+        });
+    </script>
+
+    <script src="{{url_for('static',filename='js/musicplayerscript.js')}}"></script>
+
+</body>
+
+</html>

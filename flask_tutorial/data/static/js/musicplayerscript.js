@@ -3,7 +3,7 @@ let play = document.getElementById('play');
 let next = document.querySelector('#next');
 let title = document.querySelector('#title');
 let artist = document.querySelector('#artist');
-let recent_volume= document.querySelector('#volume');
+let recent_volume = document.querySelector('#volume');
 let slider = document.getElementById('duration_slider');
 let track_image = document.querySelector('#track_image');
 let currenttime = document.querySelector('#currenttime');
@@ -16,6 +16,7 @@ let All_song = $('#my-data').data('playlist');
 // let auto_play = document.querySelector('#auto');
 // let present = document.querySelector('#present');
 // let total = document.querySelector('#total');
+let flag = true;
 
 let timer;
 // let autoplay = 0;
@@ -66,151 +67,137 @@ var ifplay = false;
 // All functions
 
 // function load the track
-function load_track(index_no){
-	clearInterval(timer);
-	reset_slider();
+function load_track(index_no) {
+    clearInterval(timer);
+    reset_slider();
 
-	track.src = All_song[index_no]['Path'];
-	title.innerHTML = All_song[index_no]['Title'];
-	// artist.innerHTML = All_song[index_no].artist;
-	// track_image.src = All_song[index_no].img;
-    artist.innerHTML = " - "+All_song[index_no]['Artist'];
+    track.src = All_song[index_no]['Path'];
+    title.innerHTML = All_song[index_no]['Title'];
+    // artist.innerHTML = All_song[index_no].artist;
+    // track_image.src = All_song[index_no].img;
+    artist.innerHTML = " - " + All_song[index_no]['Artist'];
     track.load();
-	timer = setInterval(range_slider ,1000);
-	//totaltime.innerHTML=(Math.floor(track.duration/60)).toLocaleString('en-US',{minimumIntegerDigits:2})+':'+(Math.floor(track.duration)%60).toLocaleString('en-US',{minimumIntegerDigits:2});
+    timer = setInterval(range_slider, 1000);
+    //totaltime.innerHTML=(Math.floor(track.duration/60)).toLocaleString('en-US',{minimumIntegerDigits:2})+':'+(Math.floor(track.duration)%60).toLocaleString('en-US',{minimumIntegerDigits:2});
 
-	// total.innerHTML = All_song.length;
-	// present.innerHTML = index_no + 1;	
+    // total.innerHTML = All_song.length;
+    // present.innerHTML = index_no + 1;	
 }
 
 load_track(index_no);
 
 
 //mute sound function
-function mute_sound(){
-	track.volume = 0;
-	volume.value = 0;
-	// volume_show.innerHTML = 0;
+function mute_sound() {
+    track.volume = 0;
+    volume.value = 0;
+    // volume_show.innerHTML = 0;
 }
 
 
 // checking.. the song is playing or not
- function justplay()
- {
- 	if(Playing_song==false)
- 	{
- 		playsong();
- 	}
- 	else
- 	{
- 		pausesong();
- 	}
- }
+function justplay() {
+    if (Playing_song == false) {
+        playsong();
+    } else {
+        pausesong();
+    }
+}
 
 
 // reset song slider
- function reset_slider(){
- 	slider.value = 0;
- }
+function reset_slider() {
+    slider.value = 0;
+}
 
 // play song
-function playsong(){
-  track.play();
-  Playing_song = true;
-  play.innerHTML = '<i class="fa fa-pause" aria-hidden="true"></i>';
-  totaltime.innerHTML=(Math.floor(track.duration/60)).toLocaleString('en-US',{minimumIntegerDigits:2})+':'+(Math.floor(track.duration)%60).toLocaleString('en-US',{minimumIntegerDigits:2});
+function playsong() {
+    track.play();
+    Playing_song = true;
+    play.innerHTML = '<i class="fa fa-pause" aria-hidden="true"></i>';
+    totaltime.innerHTML = (Math.floor(track.duration / 60)).toLocaleString('en-US', { minimumIntegerDigits: 2 }) + ':' + (Math.floor(track.duration) % 60).toLocaleString('en-US', { minimumIntegerDigits: 2 });
 }
 
 //pause song
-function pausesong(){
-	track.pause();
-	Playing_song = false;
-	play.innerHTML = '<i class="fa fa-play" aria-hidden="true"></i>';
+function pausesong() {
+    track.pause();
+    Playing_song = false;
+    play.innerHTML = '<i class="fa fa-play" aria-hidden="true"></i>';
 }
 
 
 // next song
-function next_song(){
-	if(index_no < All_song.length - 1)
-	{
-		index_no += 1;
-		load_track(index_no);
-		playsong();
+function next_song() {
+    if (index_no < All_song.length - 1) {
+        index_no += 1;
+        load_track(index_no);
+        playsong();
 
-	}
-	else
-	{
-		index_no = 0;
-		load_track(index_no);
-		playsong();
-	}
+    } else {
+        index_no = 0;
+        load_track(index_no);
+        playsong();
+    }
 }
 
 
 // previous song
-function previous_song(){
-	if(index_no > 0)
-	{
-		index_no -= 1;
-		load_track(index_no);
-		playsong();
-	}
-	else
-	{
-		index_no = All_song.length;
-		load_track(index_no);
-		playsong();
-	}
+function previous_song() {
+    if (index_no > 0) {
+        index_no -= 1;
+        load_track(index_no);
+        playsong();
+    } else {
+        index_no = All_song.length;
+        load_track(index_no);
+        playsong();
+    }
 }
 
 
 // change volume
-function volume_change(){
-	// volume_show.innerHTML = recent_volume.value;
-	track.volume = recent_volume.value / 100;
+function volume_change() {
+    // volume_show.innerHTML = recent_volume.value;
+    track.volume = recent_volume.value / 100;
 }
 
 // change slider position 
-function change_duration(){
-	slider_position = track.duration * (slider.value / 100);
-	track.currentTime = slider_position;
+function change_duration() {
+    slider_position = track.duration * (slider.value / 100);
+    track.currentTime = slider_position;
 }
 
-function range_slider(){
-	let position = 0;
-        
-        // update slider position
-		if(!isNaN(track.duration))
-		{
-		   position = track.currentTime * (100 / track.duration);
-		   slider.style.background = 'linear-gradient(to right,#FF2D2D 0%, #FF2D2D ' + position + '%, #fff ' + position + '%,white 100%)'
-		   slider.value = position;
+function range_slider() {
+    let position = 0;
 
-		   ctime=(Math.floor(track.currentTime/60)).toLocaleString('en-US',{minimumIntegerDigits:2})+':'+(Math.floor(track.currentTime)%60).toLocaleString('en-US',{minimumIntegerDigits:2});
-		   currenttime.innerHTML = ctime;
-		   ttime=(Math.floor(track.duration/60)).toLocaleString('en-US',{minimumIntegerDigits:2})+':'+(Math.floor(track.duration)%60).toLocaleString('en-US',{minimumIntegerDigits:2});
-		   totaltime.innerHTML = ttime;
-		//    console.log((ctime/ttime)*100);
-		   if((track.currentTime/track.duration)*100 >= 30){
-			ifplay = true;
-		   }
-       	}
-       // function will run when the song is over
-       if(track.ended)
-       {
-       	 play.innerHTML = '<i class="fa fa-pause" aria-hidden="true"></i>';
-		 ifplay=false;
-         next_song();
-	   }
-	   if(ifplay){
-		console.log("ajax fire");
-		$.ajax({
-			url : '/',
-			type: 'POST',
-			data:  {'songid':All_song[index_no]['ID']}
-			})
-			return false;
-	}
+    // update slider position
+    if (!isNaN(track.duration)) {
+        position = track.currentTime * (100 / track.duration);
+        slider.style.background = 'linear-gradient(to right,#FF2D2D 0%, #FF2D2D ' + position + '%, #fff ' + position + '%,white 100%)'
+        slider.value = position;
+
+        ctime = (Math.floor(track.currentTime / 60)).toLocaleString('en-US', { minimumIntegerDigits: 2 }) + ':' + (Math.floor(track.currentTime) % 60).toLocaleString('en-US', { minimumIntegerDigits: 2 });
+        currenttime.innerHTML = ctime;
+        ttime = (Math.floor(track.duration / 60)).toLocaleString('en-US', { minimumIntegerDigits: 2 }) + ':' + (Math.floor(track.duration) % 60).toLocaleString('en-US', { minimumIntegerDigits: 2 });
+        totaltime.innerHTML = ttime;
+        //    console.log((ctime/ttime)*100);
+        if ((track.currentTime / track.duration) * 100 >= 30 & flag) {
+            flag = false;
+            $.ajax({
+                    url: '/',
+                    type: 'POST',
+                    data: { 'songid': All_song[index_no]['ID'] }
+                })
+                /* console.log("ajax fire"); */
+            return false;
+        }
+    }
+
+    // function will run when the song is over
+    if (track.ended) {
+        play.innerHTML = '<i class="fa fa-pause" aria-hidden="true"></i>';
+        ifplay = false;
+        next_song();
+    }
+
 }
-
-

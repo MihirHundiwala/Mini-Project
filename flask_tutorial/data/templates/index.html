@@ -58,7 +58,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="Playlists" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Playlists</a>
                     <div class="dropdown-menu" aria-labelledby="Playlists">
-                        <a class="dropdown-item" href="#">My Playlist</a>
+                        <a class="dropdown-item" href="{{url_for('playlist')}}">My Playlist</a>
                         <a class="dropdown-item" href="#">Popular Songs</a>
                         <a class="dropdown-item" href="#">Recommended Songs</a>
                     </div>
@@ -67,11 +67,11 @@
             </ul>
             <ul class="navbar-nav" id="nav_contents_right">
                 <li class="nav-item">
-                    <form class="form-inline my-2 my-lg-0" method="POST">
-                        <button class="btn" name="search" type="submit" id="search-btn"><img
+                    <form class="form-inline my-2 my-lg-0">
+                        <button class="btn" type="submit" id="search-btn"><img
                                 src="{{url_for('static',filename='images/Search Logo.png')}}" id="search-logo"
                                 alt=""></button>
-                        <input class="form-control" name="songsearch" type="search" placeholder="Search for the music you love!" aria-label="Search">
+                        <input class="form-control" type="search" placeholder="Search for the music you love!" aria-label="Search">
                     </form>
                 </li>
                 {% if session['logged_in'] %}
@@ -87,6 +87,26 @@
                     <div data-toggle="modal" data-target="#signupmodal"><a class="signup_btn"><span>Sign Up</a></div>
                 </li>
                 {% endif %}
+            </ul>
+
+            <ul class="navbar-nav" id="s-nav_contents_right">
+                <li class="nav-item searchbar">
+                    <input type="text" placeholder="Search for the music you love!" aria-label="Search">
+                    <button class="btn" type="submit" id="s-search-btn"><img
+                            src="{{url_for('static',filename='images/Search Logo.png')}}" id="s-search-logo"
+                            alt=""></button>
+                </li>
+                <li class="nav-item dropdown dropleft">
+                    {% if session['logged_in'] %}
+                    <a class="btn signin_btn" href="{{url_for('logout')}}">Sign Out</a> {% else %}
+                    <a class="nav-link dropdown-toggle" href="#" id="Login_btns" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i></a>
+                    <div class="dropdown-menu" aria-labelledby="Login_btns">
+                        <button class="btn signin_btn" data-toggle="modal " data-target="#signinmodal " type="button ">Sign In</button>
+                        <div data-toggle="modal " data-target="#category_choice "><a class="signup_btn "><span>Sign
+                                    Up</a></div>
+                    </div>
+                    {% endif %}
+                </li>
             </ul>
         </div>
     </nav>
@@ -185,7 +205,7 @@
     <div class="owl-carousel owl-theme" id="soul">
         {% for lem in sli[0] %}
         <div class="item">
-            <img src="https://picsum.photos/640/480?pic=5" onclick="playsong()"/>
+            <img src="https://picsum.photos/640/480?pic=5" onclick="playsong()" />
             <span class="img-text">{{lem['Title']}}</span>
         </div>
         {% endfor %}
@@ -345,8 +365,8 @@
             </div>
             <span><img src="{{url_for('static',filename='images/queue.png')}}" id="queue_icon">
         </div>
-    <!-- </div> -->
-</nav>
+
+    </nav>
     <script src="{{url_for('static',filename='js/owl.carousel.min.js')}}"></script>
     <script src="{{url_for('static',filename='js/home-page.js')}}"></script>
     <script src="{{url_for('static',filename='js/musicplayerscript.js')}}"></script>

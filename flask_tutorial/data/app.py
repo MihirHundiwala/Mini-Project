@@ -1,3 +1,4 @@
+import threading
 import firebase_admin
 from firebase_admin import credentials, firestore, storage, db
 import re, random
@@ -8,6 +9,7 @@ cred=credentials.Certificate('env\serviceAccount.json')
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://music-player-3dac7-default-rtdb.firebaseio.com'
 })
+
 # usref = db.reference("/Songs/")
 # usid = list()
 # usall = usref.order_by_child('Genre').get()
@@ -40,6 +42,14 @@ firebase_admin.initialize_app(cred, {
 # with open("data\play2.json", "r") as f:
 # 	file_contents = json.load(f)
 # ref.set(file_contents)
+
+""" ref = db.reference("/SongMatrix/")
+
+with open("data\play_count.json", "r") as f:
+
+    file_contents = json.load(f)
+
+ref.set(file_contents) """
 
 
 import pyrebase
@@ -92,18 +102,24 @@ def songs():
                     name = v
                 if k == 'Path':
                     path = v
+                if k == 'Artist':
+                    artist = v
+                if k == 'Album':
+                    album = v
+                if k == 'Genre':
+                    genre = v
             if i == 'Soulful':
-                slist.append({'Title':name, 'Path':path}) 
+                slist.append({'Title':name, 'Path':path, 'Artist':artist, 'Album':album, 'Genre':genre}) 
             if i == 'Bollywood Party':
-                blist.append({'Title':name, 'Path':path}) 
+                blist.append({'Title':name, 'Path':path, 'Artist':artist, 'Album':album, 'Genre':genre}) 
             if i == 'Romance':
-                rlist.append({'Title':name, 'Path':path}) 
+                rlist.append({'Title':name, 'Path':path, 'Artist':artist, 'Album':album, 'Genre':genre}) 
             if i == 'Old Songs':
-                olist.append({'Title':name, 'Path':path}) 
+                olist.append({'Title':name, 'Path':path, 'Artist':artist, 'Album':album, 'Genre':genre}) 
             if i == 'Hip-Hop, Rap':
-                hlist.append({'Title':name, 'Path':path}) 
+                hlist.append({'Title':name, 'Path':path, 'Artist':artist, 'Album':album, 'Genre':genre}) 
             if i == 'Pop':
-                plist.append({'Title':name, 'Path':path})  
+                plist.append({'Title':name, 'Path':path, 'Artist':artist, 'Album':album, 'Genre':genre})  
     allist.append(slist)
     allist.append(rlist)
     allist.append(blist)
@@ -112,18 +128,21 @@ def songs():
     allist.append(olist)       
     return allist
 
-
 def unetry(email):
     usid = list()
     usall = usref.order_by_child('UserID').get()
-    for v in usall.values():
-        for k,v in usall.items():
-            if k == "UserID":
-                usid.append(v)
-    while True:
+    if(usall!=None):
+        for v in usall.values():
+            for k,v in usall.items():
+                if k == "UserID":
+                    usid.append(v)
+        while True:
+            uid = 'u' + str(random.sample(range(10000,100000),1)[0])
+            if uid not in usid:
+                break
+    else:
         uid = 'u' + str(random.sample(range(10000,100000),1)[0])
-        if uid not in usid:
-            break
+
     file_contents = {
                 "UserID": uid,
                 "email": email,
@@ -131,6 +150,11 @@ def unetry(email):
                 "Playlist": " "
     }
     usref.child(uid).set(file_contents)
+
+    ref = db.reference("/SongMatrix/")
+    songs = ref.order_by_child('SongID').get()
+    for v in songs:
+        ref.child(v).child(uid).set("0");
 
 
 def search(strm):
@@ -149,11 +173,9 @@ def search(strm):
                     retval.append(v)
     return retval
         
-
-
 def getsong():
     play = list()
-    playli = ref.order_by_child('Genre').equal_to('Soulful').limit_to_last(5).get()
+    playli = ref.order_by_child('Genre').equal_to('Soulful').get()
     for v in playli.values():
         play.append(v)
     play = str(play)
@@ -193,11 +215,12 @@ def basic():
             try:
                 user = auth.create_user_with_email_and_password(email,password)
                 user = auth.sign_in_with_email_and_password(email, password)
-                auth.send_email_verification(user['idToken']) 
-                unetry(email)
-                  #reset the password
-                #   auth.send_password_reset_email(email)
                 session['logged_in'] = True
+                auth.send_email_verification(user['idToken'])
+                threading.Thread(target=unetry(email)).start() 
+                """ unetry(email) """
+                #   reset the password
+                #   auth.send_password_reset_email(email)
                 return render_template('index.html', s=cre, sli=sli, playli=getsong())
             except:
                 return render_template('index.html', us=crefail, sli=sli, playli=getsong())
@@ -214,7 +237,10 @@ def basic():
 def logout():
     session['logged_in'] = False
     return redirect("/")
-    # render_template("index.html")
+
+@app.route('/playlist')
+def playlist():
+    return render_template('PlaylistView.html',sli=songs())
 
 if __name__ == "__main__":
     app.config['TEMPLATES_AUTO_RELOAD'] = True

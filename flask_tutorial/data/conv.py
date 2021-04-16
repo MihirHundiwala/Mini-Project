@@ -31,8 +31,8 @@ def make_json(csvFilePath, jsonFilePath):
 
 # Decide the two file paths according to your
 # computer system
-csvFilePath = r'data\play2.csv'
-jsonFilePath = r'data\play2.json'
+csvFilePath = r'data/play_count.csv'
+jsonFilePath = r'data/play_count.json'
 
 # Call the make_json function
 make_json(csvFilePath, jsonFilePath)
