@@ -1,0 +1,156 @@
+{% extends 'layout.html' %} {% block meta %}
+
+<meta id="my-data" data-previousplaylist="{{previousplayli}}">
+<meta id="my-data2" data-index="0"> {% endblock %} {% block styling %}
+
+<link rel="stylesheet" href="{{url_for('static',filename='css/home-page.css')}}" /> {% endblock %}
+
+<title>{% block title %} Beat Music {% endblock %}</title>
+
+{% block content %}
+
+<div class="owl-carousel owl-theme" id="categories">
+    <div class="item">
+        <img src="{{url_for('static',filename='images/Soul.jpg')}}" style="height: 300px;" />
+        <div class="slide-text">
+            <p>Soulful</p>
+        </div>
+    </div>
+    <div class="item">
+        <img src="{{url_for('static',filename='images/Pop.jpg')}}" style="height: 300px;" />
+        <div class="slide-text">
+            <p>Pop</p>
+        </div>
+    </div>
+
+    <div class="item">
+        <img src="{{url_for('static',filename='images/Old.jpg')}}" style="height: 300px;" />
+        <div class="slide-text">
+            <p>Retro</p>
+        </div>
+    </div>
+    <div class="item">
+        <img src="{{url_for('static',filename='images/Romance.jpg')}}" style="height: 300px;" />
+        <div class="slide-text">
+            <p>Romance</p>
+        </div>
+    </div>
+    <div class="item">
+        <img src="{{url_for('static',filename='images/Rap.jpeg')}}" style="height: 300px;" />
+        <div class="slide-text">
+            <p>Hip-Hop/Rap</p>
+        </div>
+    </div>
+    <div class="item">
+        <img src="{{url_for('static',filename='images/Trending.jpg')}}" style="height: 300px;" />
+        <div class="slide-text">
+            <p>Trending</p>
+        </div>
+    </div>
+    <div class="item">
+        <img src="{{url_for('static',filename='images/Bollywood Party.jpg')}}" style="height: 300px;" />
+        <div class="slide-text">
+            <p>Bollywood Party</p>
+        </div>
+    </div>
+
+
+</div>
+
+
+<div class="headings">
+    <h3>Soul</h3>
+    <label data-toggle="modal" data-target="#playlist0">More</label>
+</div>
+<div class="owl-carousel owl-theme" id="soul">
+    {% for lem in sli[0] %}
+    <div class="item">
+        <img src="{{url_for('static',filename='images/Soul_song.jpg')}}" class="slide-images"
+            onclick="playrequest_indexhtml({{loop.index}},0)">
+        <div class="img-text">{{lem['Title']}}</div>
+    </div>
+    {% endfor %}
+</div>
+
+
+<div class="headings">
+    <h3>Romance</h3>
+    <label data-toggle="modal" data-target="#playlist1">More</label>
+</div>
+<div class="owl-carousel owl-theme" id="romance">
+    {% for lem in sli[1] %}
+    <div class="item">
+        <img src="{{url_for('static',filename='images/Romance_song1.jpeg')}}" class="slide-images"
+            onclick="playrequest_indexhtml({{loop.index}},1)">
+        <div class="img-text">{{lem['Title']}}</div>
+    </div>
+    {% endfor %}
+</div>
+
+
+<div class="headings">
+    <h3>Bollywood Party</h3>
+    <label data-toggle="modal" data-target="#playlist2">More</label>
+</div>
+<div class="owl-carousel owl-theme" id="bollywoodparty">
+    {% for lem in sli[2] %}
+    <div class="item">
+        <img src="{{url_for('static',filename='images/Party_song.jpg')}}" class="slide-images"
+            onclick="playrequest_indexhtml({{loop.index}},2)">
+        <div class="img-text">{{lem['Title']}}</div>
+    </div>
+    {% endfor %}
+</div>
+
+
+<div class="headings">
+    <h3>Pop</h3>
+    <label data-toggle="modal" data-target="#playlist3">More</label>
+</div>
+<div class="owl-carousel owl-theme" id="pop">
+    {% for lem in sli[3] %}
+    <div class="item">
+        <img src="{{url_for('static',filename='images/Pop_song.jpg')}}" class="slide-images"
+            onclick="playrequest_indexhtml({{loop.index}},3)">
+        <div class="img-text">{{lem['Title']}}</div>
+    </div>
+    {% endfor %}
+</div>
+
+
+<div class="headings">
+    <h3>Hip-Hop/Rap</h3>
+    <label data-toggle="modal" data-target="#playlist4">More</label>
+</div>
+<div class="owl-carousel owl-theme" id="hiphop">
+    {% for lem in sli[4] %}
+    <div class="item">
+        <img src="{{url_for('static',filename='images/Rap_song.jpg')}}" class="slide-images"
+            onclick="playrequest_indexhtml({{loop.index}},4)">
+        <div class="img-text">{{lem['Title']}}</div>
+    </div>
+    {% endfor %}
+</div>
+
+
+<div class="headings">
+    <h3>Old Songs</h3>
+    <label data-toggle="modal" data-target="#playlist5">More</label>
+</div>
+<div class="owl-carousel owl-theme" id="oldsongs">
+    {% for lem in sli[5] %}
+    <div class="item">
+        <img src="{{url_for('static',filename='images/Retro_song.jpg')}}" class="slide-images"
+            onclick="playrequest_indexhtml({{loop.index}},5)">
+        <div class="img-text">{{lem['Title']}}</div>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %} {% block plugins %}
+
+<script src="{{url_for('static',filename='js/owl.carousel.min.js')}}"></script>
+<script src="{{url_for('static',filename='js/home-page.js')}}"></script>
+
+{% endblock %}

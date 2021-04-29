@@ -1,0 +1,91 @@
+{% extends 'layout.html' %} {% block meta %}
+
+<meta id="my-data" data-previousplaylist="{{previousplayli}}">
+<meta id="my-data1" data-currentplaylist="{{currentplayli}}">
+<meta id="my-data2" data-index="{{i}}">
+<meta id="listtype" data-listtype="{{listtype}}">
+<meta id="uid" data-uid="{{uid}}">
+
+{% endblock %} {% block styling %}
+
+<link rel="stylesheet" href="{{url_for('static',filename='css/play.css')}}" /> {% endblock %}
+
+<title>{% block title %} Beat Music {% endblock %}</title>
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-3 fixed-col">
+            <img src="https://picsum.photos/640/480?pic=10" class="cover" />
+            <br><br>
+            <div>
+                <p class="pup">Recommended Playlists</p>
+            </div>
+            <div class="row artipad">
+                <div class="col-1.5">
+                    <img src="https://picsum.photos/640/480?pic=10" class="roundcov" />
+                </div>
+                <div class="col-8 arti">
+                    <p class="pname">Playlist Name</p>
+                </div>
+            </div>
+            <div class="row artipad">
+                <div class="col-1.5">
+                    <img src="https://picsum.photos/640/480?pic=10" class="roundcov" />
+                </div>
+                <div class="col-8 arti">
+                    <p class="pname">Playlist Name</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-8 song-cont">
+            <h2 class="head smleft" id="listgenre"></h2>
+            <ul class="line smleft pdown">
+                <li>20 songs</li>
+                <li>75 min</li>
+            </ul><br><br>
+            <button class="playbtn btn-default"><i class="fa fa-play" aria-hidden="true" style="padding-right: 5px;"></i>Play Songs</button>
+            <br><br> {% for lem in mysli %}
+            <div class="row pad">
+                <div class="col-1.5" onclick="playrequest_playlistviewhtml({{loop.index}})">
+                    <img src="https://picsum.photos/640/480?pic=10" class="songcov" />
+                </div>
+                <div class="col-10 nopad">
+                    <ul class="navbar nav ml-auto" id="songlist">
+                        <li onclick="playrequest_playlistviewhtml({{loop.index}})">
+                            <p class="pup">{{lem['Title']}}</p>
+                            <p class="pdown">{{lem['Artist']}} - {{lem['Album']}}</p>
+                        </li>
+                        <li>
+                            <div class="dropdown">
+                                <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-v more" aria-hidden="true"></i>
+                                    </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Play Next</a>
+                                    <a class="dropdown-item" href="#">Add to Queue</a>
+                                    <label class="dropdown-item" onclick="addtoplaylist('{{uid}}','{{lem['ID']}}')">Add to Playlist</label>
+                                    <label class="dropdown-item" onclick="removefromplaylist('{{uid}}','{{lem['ID']}}')">Remove from Playlist</label>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %} {% block plugins %}
+<script>
+    $(document).ready(function() {
+
+        $(".btn").click(function() {
+            $("input[type='text']").toggleClass("active");
+        });
+    });
+</script>
+
+{% endblock %}

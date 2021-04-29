@@ -1,0 +1,205 @@
+.modal-lg {
+    max-width: 100% !important;
+}
+
+#queue,
+.category_modals {
+    width: 100%;
+    height: fit-content;
+    padding: 0 !important;
+}
+
+#queue {
+    z-index: 3000 !important;
+}
+
+#playnav {
+    background-color: #00000000;
+}
+
+#queue_head {
+    border-bottom: 0 none;
+    padding-top: 10px;
+}
+
+#queue_content {
+    background-image: url('../images/BackgroundBlack.jpg');
+    height: 580px;
+    color: white;
+}
+
+#queue>.modal-dialog,
+#playlist>.modal-dialog,
+#playlist0>.modal-dialog,
+#playlist1>.modal-dialog,
+#playlist2>.modal-dialog,
+#playlist3>.modal-dialog,
+#playlist4>.modal-dialog,
+#playlist5>.modal-dialog,
+#popular>.modal-dialog,
+#myplaylist>.modal-dialog,
+#searchmodal>.modal-dialog,
+#recommend>.modal-dialog {
+    margin-top: 0;
+    margin: 0 !important;
+}
+
+.dropdown-menu > label{
+    margin-bottom: 2px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.modal-backdrop {
+    display: none;
+}
+
+.cover {
+    width: 200px;
+    height: 200px;
+}
+
+.cover-cat{
+    width: 300px;
+    height: 200px;
+    margin-left: -50px;
+}
+
+.arti {
+    margin-top: 15px;
+}
+
+.cover,.cover-cat,
+.songcov {
+    border-radius: 10%;
+}
+
+.more_btn>i {
+    color: white;
+}
+
+.queue-cont {
+    height: 495px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.category_content{
+    height: 470px;
+}
+
+.queuesong {
+    z-index: 3;
+}
+
+.songname {
+    margin: 0;
+    font-size: 18px;
+}
+
+.songinfo {
+    margin: 0;
+    color: rgb(122, 122, 122);
+    font-size: 14px;
+}
+
+.song_options {
+    margin-right: -40px;
+    right: -40px;
+}
+
+ul.line>li {
+    float: left;
+    margin: 0 10px;
+}
+
+.pad {
+    padding-left: 5%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin: 0;
+}
+
+.pad:hover {
+    border: 0.5px solid rgb(104, 102, 102);
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.nmdown {
+    margin: 0;
+    font-size: 14px;
+    color: gray;
+    font-weight: bold;
+}
+
+.songcov {
+    width: 60px;
+    height: 60px;
+}
+
+.nopad {
+    padding: 0;
+}
+
+.pdown {
+    margin: 0;
+    font-size: 12px;
+    color: gray;
+}
+
+.playbtn {
+    margin-left: 35px;
+    height: 40px;
+    text-align: center;
+    width: 130px;
+    border-radius: 35px;
+    background: #3ad5ab;
+    border-color: #84e8cc;
+    color: white;
+    width: fit-content;
+    padding-left: 20px;
+    padding-right: 20px;
+    letter-spacing: 0.6px;
+    text-shadow: 0;
+    font-size: 15px;
+    font-weight: bold;
+    transition: all 0.25s ease;
+}
+
+.playbtn:hover {
+    color: white;
+    background: rgb(27, 181, 216);
+    border-color: rgb(0, 255, 255);
+}
+
+
+/* width */
+
+::-webkit-scrollbar {
+    width: 8px;
+    border-radius: 5px;
+}
+
+
+/* Track */
+
+::-webkit-scrollbar-track {
+    background: #131313;
+    border-radius: 70px;
+}
+
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+    background: #1fb28a;
+    border-radius: 70px;
+}
+
+
+/* Handle on hover */
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

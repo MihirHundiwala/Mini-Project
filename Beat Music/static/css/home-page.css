@@ -1,0 +1,118 @@
+body,
+html {
+    height: 100%;
+    background-image: url('../images/BackgroundPurple.jpg');
+    height: 100%;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: 50px;
+}
+
+.slide-text {
+    color: rgb(255, 255, 255);
+    margin-top: -60px;
+    margin-left: 30px;
+    font-size: 30px;
+}
+
+.slide-images{
+    height: 140px !important;
+}
+
+
+/* .slide-text {
+    position: absolute;
+    margin-top: 500px;
+    width: 700px;
+    margin-left: 130px;
+    background-color: #0000002f;
+    z-index: 2;
+}
+
+.slide-text p {
+    font-size: 20px;
+    padding-bottom: 0 !important;
+    color: rgba(255, 255, 255, 0.651);
+    padding-top: 10px;
+    padding-left: 10px;
+} */
+
+.headings {
+    margin-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+    display: flex;
+    width: 100%;
+}
+
+.headings>h3 {
+    color: #ffffff;
+}
+
+.headings h3:hover {
+    cursor: pointer;
+    color: #2caae1;
+}
+
+.headings>label {
+    color: white;
+    float: right;
+    position: absolute;
+    right: 30px;
+}
+
+.headings>label:hover {
+    color: #2caae1;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.img-text {
+    color: aliceblue;
+    text-overflow: ellipsis;
+    height: 25px;
+}
+
+.img-text:hover {
+    color: #2caae1;
+    cursor: pointer;
+}
+
+.item>img {
+    border-radius: 10px;
+}
+
+.carousel-wrapper {
+    font-family: sans-serif;
+}
+
+.owl-carousel .owl-nav {
+    overflow: hidden;
+    margin-top: -30px;
+    height: 70px;
+}
+
+.owl-theme .owl-dots .owl-dot.active span,
+.owl-theme .owl-dots .owl-dot:hover span {
+    background: #5110e9;
+}
+
+.owl-carousel .owl-prev.disabled,
+.owl-carousel .owl-next.disabled {
+    pointer-events: none;
+    opacity: 0.25;
+}
+
+.owl-theme .owl-nav [class*=owl-] {
+    color: #ffffff;
+    font-size: 39px;
+    border-radius: 3px;
+    background: none;
+}
+
+.owl-theme .owl-nav [class*=owl-]:hover {
+    background: none;
+    color: #5110e9;
+}
