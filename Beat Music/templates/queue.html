@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="css/play.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- <div class="container-fluid"> -->
+        <div class="row">
+            <div class="col-3">
+                <h2 class="head">Now Playing</h2>
+                <p class="nmdown">Playing From Album</p><br><br>
+                <img src="pictures/cover.jpg" class="cover" />
+                <br><br>
+                <div>
+                    <h3 class="head">Song Name</h3>
+                    <p class="nmdown">Artist - Album</p>
+                    <p class="nmdown">3:32</p>
+                </div>
+            </div>
+            <div class="col-8">
+                <h2 class="head smleft">Queue</h2>
+                <p class="pdown smleft">20 Songs</p>
+                <br>
+                <button class="playbtn btn-default">Save As Playlist</button>
+                <button class="btn-more btn-default">Show More</button>
+                <br><br>
+                <div class="row pad">
+                    <div class="col-1.5">
+                        <img src="pictures/cover.jpg" class="songcov" />
+                    </div>
+                    <div class="col-10 nopad">
+                        <ul class="navbar nav ml-auto" id="songlist">
+                            <li>
+                                <p class="pup">Song Name</p>
+                                <p class="pdown">Artist - Album</p>
+                            </li>
+                            <li>
+                                <div class="dropdown">
+                                    <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-v more" aria-hidden="true"></i>
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="width: 50%;">
+                                        <a class="dropdown-item" href="#">Remove</a>
+                                        <a class="dropdown-item" href="#">Add to Playlist</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row pad">
+                    <div class="col-1.5">
+                        <img src="pictures/cover.jpg" class="songcov" />
+                    </div>
+                    <div class="col-10 nopad">
+                        <ul class="navbar nav ml-auto">
+                            <li>
+                                <p class="pup">Song Name</p>
+                                <p class="pdown">Artist - Album</p>
+                            </li>
+                            <li>
+                                <div class="dropdown">
+                                    <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-v more" aria-hidden="true"></i>
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#">Remove</a>
+                                        <a class="dropdown-item" href="#">Add to Playlist</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row pad">
+                    <div class="col-1.5">
+                        <img src="pictures/cover.jpg" class="songcov" />
+                    </div>
+                    <div class="col-10 nopad">
+                        <ul class="navbar nav ml-auto">
+                            <li>
+                                <p class="pup">Song Name</p>
+                                <p class="pdown">Artist - Album</p>
+                            </li>
+                            <li>
+                                <div class="dropdown">
+                                    <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-v more" aria-hidden="true"></i>
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#">Remove</a>
+                                        <a class="dropdown-item" href="#">Add to Playlist</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row pad">
+                    <div class="col-1.5">
+                        <img src="pictures/cover.jpg" class="songcov" />
+                    </div>
+                    <div class="col-10 nopad">
+                        <ul class="navbar nav ml-auto">
+                            <li>
+                                <p class="pup">Song Name</p>
+                                <p class="pdown">Artist - Album</p>
+                            </li>
+                            <li>
+                                <div class="dropdown">
+                                    <button class="btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-ellipsis-v more" aria-hidden="true"></i>
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#">Remove</a>
+                                        <a class="dropdown-item" href="#">Add to Playlist</a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

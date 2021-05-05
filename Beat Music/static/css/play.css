@@ -1,0 +1,424 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-image: url('../images/BackgroundBlack.jpg');
+    height: 100%;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+    margin-top: 80px;
+}
+
+
+/* width */
+
+::-webkit-scrollbar {
+    width: 10px;
+    border-radius: 5px;
+}
+
+
+/* Track */
+
+ ::-webkit-scrollbar-track {
+    background: #131313;
+    border-radius: 70px;
+}
+
+
+/* Handle */
+
+ ::-webkit-scrollbar-thumb {
+    background: #1fb28a;
+    border-radius: 70px;
+}
+
+
+/* Handle on hover */
+
+ ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+img {
+    border-radius: 10%;
+}
+
+.more {
+    color: white;
+    padding: 10px 15px;
+    /* border-radius: 50%; 
+    border: 1px solid white; */
+}
+
+.show {
+    border: none;
+}
+
+.song-cont {
+    height: 490px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+
+/* .more:hover{
+    background-color: gray;
+    opacity: 0.4;
+} */
+
+.dropdown-menu {
+    background-color: #818c94;
+    color: white;
+    min-width: none !important;
+    width: 100px !important;
+}
+
+.dropdown-item {
+    color: white;
+    padding: 5px;
+    margin: 0;
+}
+
+.dropdown-menu {
+    border: none;
+}
+
+#dropdownMenuButton {
+    border: 0px;
+    padding: 0;
+    margin: 0;
+}
+
+ul.line>li {
+    float: left;
+    margin: 0 10px;
+}
+
+.centbtn {
+    position: absolute;
+    top: 50%;
+    left: 40%;
+}
+
+.btnpar {
+    position: relative;
+    margin-top: 50px;
+}
+
+.btn-more {
+    height: 40px;
+    text-align: center;
+    width: 130px;
+    background: black;
+    color: white;
+    letter-spacing: 1px;
+    text-shadow: 0;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 40px;
+    transition: all 0.25s ease;
+}
+
+.btn-more:hover {
+    color: white;
+    background-color: rgb(175, 172, 172);
+}
+
+.artipad {
+    margin-top: 10px;
+    margin-left: 2px
+}
+
+.arti {
+    padding-top: 10px;
+}
+
+.arti:hover {
+    cursor: pointer;
+}
+
+.pad {
+    padding-left: 5%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin: 0;
+}
+
+#songlist {
+    background-color: #00000000;
+}
+
+.pad:hover {
+    border: 0.5px solid rgb(104, 102, 102);
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.nmdown {
+    margin: 0;
+    font-size: 14px;
+    color: gray;
+    font-weight: bold;
+}
+
+.songcov {
+    width: 60px;
+    height: 60px;
+}
+
+.marg {
+    display: table;
+}
+
+.pup {
+    margin: 0;
+    font-size: 16px;
+}
+
+.nopad {
+    padding: 0;
+}
+
+.pdown {
+    margin: 0;
+    font-size: 12px;
+    color: gray;
+}
+
+.row-center {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.roundcov {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.playbtn {
+    margin-left: 35px;
+    height: 40px;
+    text-align: center;
+    width: 130px;
+    border-radius: 35px;
+    background: #3ad5ab;
+    border-color: #84e8cc;
+    color: white;
+    letter-spacing: 0.8px;
+    text-shadow: 0;
+    font-size: 13px;
+    font-weight: bold;
+    transition: all 0.25s ease;
+}
+
+.playbtn:hover {
+    color: white;
+    background: rgb(27, 181, 216);
+    border-color: rgb(0, 255, 255);
+}
+
+.pname {
+    margin-left: 10px;
+    padding-top: 2px;
+}
+
+
+/* Extra small devices (phones, 600px and down) */
+
+@media only screen and (min-width: 320px) and (max-width: 430px) {
+    .navbar {
+        padding: 0;
+        padding-left: 5px;
+    }
+    .container {
+        margin-left: 10%;
+        margin-right: 10%;
+        padding: 0;
+    }
+    .row {
+        margin-left: -5%;
+        margin-right: -5%;
+    }
+    .head {
+        font-size: 20px;
+    }
+    .cover {
+        width: 110px;
+        height: 110px;
+    }
+    .songcov {
+        width: 38px;
+        height: 40px;
+        margin-right: -10%;
+    }
+    .pad {
+        padding-left: 10%;
+    }
+    .pup {
+        font-size: 12px;
+    }
+    .centbtn {
+        left: 30%;
+    }
+    .pdown {
+        font-size: 10px;
+    }
+    .roundcov {
+        width: 35px;
+        height: 35px;
+    }
+    .pname {
+        font-size: 12px;
+    }
+    .btn-more {
+        height: 30px;
+        width: fit-content;
+        padding: 0 10px;
+        margin-left: 10px;
+    }
+    .playbtn {
+        height: 30px;
+        margin-left: 10px;
+        margin-bottom: 10px;
+    }
+    .smleft {
+        padding-left: 10px;
+    }
+    .col-xs-1 {
+        padding: 0;
+    }
+    .col-3 {
+        padding: 0;
+    }
+    .col-8 {
+        padding-left: 5%;
+        padding-right: 0;
+    }
+    .col-10 {
+        padding-left: 0;
+    }
+}
+
+@media only screen and (min-width: 431px) and (max-width: 530px) {
+    .container {
+        margin-left: 10%;
+        margin-right: 10%;
+        padding: 0;
+    }
+    .row {
+        margin-left: -5%;
+        margin-right: -5%;
+    }
+    .cover {
+        width: 110px;
+        height: 110px;
+    }
+    .songcov {
+        width: 50px;
+        height: 50px
+    }
+    .roundcov {
+        width: 45px;
+        height: 45px;
+    }
+    .pname {
+        font-size: 14px;
+    }
+    .playbtn {
+        margin-left: 0;
+    }
+    .head {
+        font-size: 22px;
+    }
+    .col-xs-1 {
+        padding: 0;
+    }
+    .col-3 {
+        padding: 0;
+    }
+    .col-8 {
+        padding-left: 5%;
+        padding-right: 0;
+    }
+}
+
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+
+@media only screen and (max-width: 531px) {
+    .container {
+        margin-left: 10%;
+        margin-right: 10%;
+        padding: 0;
+    }
+    .row {
+        margin-left: -5%;
+        margin-right: -5%;
+    }
+    .cover {
+        width: 170px;
+        height: 170px;
+    }
+    .roundcov {
+        width: 45px;
+        height: 45px;
+    }
+    .pname {
+        font-size: 14px;
+    }
+    .playbtn {
+        margin-left: 0;
+    }
+    .head {
+        font-size: 26px;
+    }
+    .col-3 {
+        padding: 0;
+    }
+    .col-8 {
+        padding-left: 8%;
+        padding-right: 0;
+    }
+}
+
+
+/* Medium devices (landscape tablets, 768px and up) */
+
+@media only screen and (min-width: 768px) {
+    .container {
+        margin-left: 10%;
+        margin-right: -5%;
+        padding: 0;
+    }
+    .cover {
+        width: 170px;
+        height: 170px;
+    }
+    .arti {
+        margin-top: 15px;
+    }
+    .col-3 {
+        width: 80%;
+        padding: 0;
+    }
+    .col-8 {
+        width: 50%;
+        padding: 0;
+    }
+}
+
+
+/* Large devices (laptops/desktops, 992px and up) */
+
+@media only screen and (min-width: 992px) {
+    .cover {
+        width: 200px;
+        height: 200px;
+    }
+    .arti {
+        margin-top: 15px;
+    }
+}
