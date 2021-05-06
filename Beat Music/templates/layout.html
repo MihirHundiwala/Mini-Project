@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta id="my-data" data-previousplaylist="{{previousplayli}}">
+    <meta id="my-data1" data-currentplaylist="{{currentplayli}}">
+    <!-- <meta id="my-data2" data-index="{{i}}"> -->
+    <meta id="my-data3" data-sli="{{sli}}">
+    <meta id="listtype" data-listtype="{{listtype}}">
+    <meta id="uid" data-uid="{{uid}}"> {% block meta %} {% endblock %}
+
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+    <!-- JQuery -->
+    <script src="{{url_for('static',filename='js/jquery.min.js')}}"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='./css/bootstrap.min.css') }}">
+    <script src="{{url_for('static',filename='js/bootstrap.bundle.min.js')}}"></script>
+
+    <!-- Font-awesome -->
+    <link rel="stylesheet" href="{{url_for('static',filename='css/fontawesome.min.css')}}" />
+    <script src="https://kit.fontawesome.com/555f71f953.js" crossorigin="anonymous"></script>
+
+    <!-- Owl Stylesheets -->
+    <link rel="stylesheet" href="{{url_for('static',filename='css/owl.carousel.min.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static',filename='css/owl.theme.default.min.css')}}" />
+
+    <!-- Custom css -->
+    <link rel="stylesheet" href="{{url_for('static',filename='css/navbar-footer.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static',filename='css/queue.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static',filename='css/music-player.css')}}"> {% block styling %} {% endblock
+    %}
+
+    <!-- firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
+
+    <!-- Meta tags -->
+    <meta id="meta-email" data-email="{{email}}">
+    <meta id="uid" data-uid="{{uid}}">
+
+    <title>{% block title %} {% endblock %}</title>
+</head>
+
+<body>
+
+    <!---------------------------------------- Navbar ---------------------------------------->
+    <nav class="navbar navbar-expand-md fixed-top">
+
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#collapse_target">
+            <i class="fas fa-bars"></i><!-- <span class="navbar-toggler-icon"></span> -->
+        </button>
+
+        <a class="navbar-brand mr-auto" href="#"><img src="{{url_for('static',filename='images/Logo.png')}}" alt=""
+                id="logo"></a>
+
+        <div class="collapse navbar-collapse" id="collapse_target">
+
+            <div class="dropdown-divider"></div>
+
+            <ul class="navbar-nav mr-auto" id="nav_contents_left">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('home',email=email)}}">Home</a>
+                </li>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="Categories" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">Categories</a>
+                    <div class="dropdown-menu" aria-labelledby="Categories">
+                        <label class="dropdown-item cat_label" data-toggle="modal"
+                            data-target="#playlist0">Soulful</label>
+                        <label class="dropdown-item cat_label" data-toggle="modal"
+                            data-target="#playlist1">Romance</label>
+                        <label class="dropdown-item cat_label" data-toggle="modal" data-target="#playlist2">Bollywood
+                            Party</label>
+                        <label class="dropdown-item cat_label" data-toggle="modal" data-target="#playlist3">Pop</label>
+                        <label class="dropdown-item cat_label" data-toggle="modal" data-target="#playlist4">Hip-Hop,
+                            Rap</label>
+                        <label class="dropdown-item cat_label" data-toggle="modal"
+                            data-target="#playlist5">Retro</label>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="Playlists" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">Playlists</a>
+                    <div class="dropdown-menu" aria-labelledby="Playlists">
+                        {% if session['logged_in'] %}
+                        <label class="dropdown-item" onclick="loadmyplaylist()">My Playlist</label>
+                        <label class="dropdown-item" onclick="loadpopular()">Trending</label>
+                        <label class="dropdown-item" onclick="loadrecommended()">Recommend Songs</label>
+
+                        {% else %}
+                        <button class="dropdown-item btn signin_btn" data-toggle="modal" data-target="#signinmodal"
+                            type="button" style="padding-left: 15px;
+                            padding-right: 15px; margin-bottom: 2px;">My Playlist</button>
+                        <label class="dropdown-item" onclick="loadpopular()">Trending</label>
+                        <button class="dropdown-item btn signin_btn" data-toggle="modal" data-target="#signinmodal"
+                            type="button" style="padding-left: 15px;
+                            padding-right: 15px; margin-bottom: 2px;">Recommended Songs</button> {% endif %}
+                    </div>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav" id="nav_contents_right">
+                <li class="nav-item search-form">
+                    <form class="form-inline my-2 my-lg-0">
+                        <button class="btn" type="button" id="search-btn"><img
+                                src="{{url_for('static',filename='images/Search Logo.png')}}" id="search-logo" alt=""
+                                onclick="searchsong()"></button>
+                        <input class="form-control" type="search" placeholder="Search for the music you love!"
+                            aria-label="Search" id="strm">
+                    </form>
+                </li>
+                {% if session['logged_in'] %}
+                <li class="nav-item">
+                    <a class="btn signin_btn" href="{{url_for('logout')}}">Sign Out</a>
+                </li>
+                {% else %}
+                <li class="nav-item lbtns">
+                    <button class="btn signin_btn" data-toggle="modal" data-target="#signinmodal" type="button">Sign
+                        In</button>
+                </li>
+                <li class="nav-item lbtns">
+                    <div data-toggle="modal" data-target="#signupmodal"><a class="signup_btn"><span>Sign Up</a></div>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <li class="nav-item dropdown dropleft sbtns">
+            <a class="nav-link" id="Login_btns" role="button" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false"><i class="fa fa-user" aria-hidden="true"></i></a>
+            <div class="dropdown-menu" aria-labelledby="Login_btns">
+                <button class="btn signin_btn" data-toggle="modal" data-target="#signinmodal" style="color: white;"
+                    type="button ">Sign
+                    In</button>
+                <div data-toggle="modal" data-target="#signupmodal" style="margin-left: 5px;"><a
+                        class="signup_btn"><span>Sign Up</a></div>
+            </div>
+        </li>
+
+    </nav>
+
+    <!---------------------------------------- Sign In Modal ---------------------------------------->
+    <div class="modal fade" id="signinmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <form class="modal-content" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Sign In</h5>
+                    <button type="button" class="close close1" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label for="email"><b>Email</b></label>
+                    <input class="modalinputs" id="reset_email" type="text" placeholder="Enter Email" name="email"
+                        required>
+                    <label for="psw"><b>Password</b></label>
+                    <input class="modalinputs" type="password" placeholder="Enter Password" name="psw" required>
+                    <label onclick="reset_pwd()" id="res-email">Forgot Password ?</label>
+                </div>
+                <div class="modal-footer">
+                    <span>Don't have an Account?</span><button type="button" class="btn" data-dismiss="modal"
+                        data-toggle="modal" id="signmodalfooter" data-target="#signupmodal">Sign Up</button>
+                    <button type="submit" name="signin" class="btn btn-success">Sign In</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!---------------------------------------- Sign Up Modal ---------------------------------------->
+    <div class="modal fade" id="signupmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <form class="modal-content" method="POST" id="submitform" onsubmit="return signupsubmit()">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Sign Up</h5>
+                    <button type="button" class="close close1" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <label for="email"><b>Email</b></label>
+                    <input class="modalinputs form-control" type="text" placeholder="Enter Email" name="email" required>
+
+                    <label for="psw"><b>Password</b></label>
+                    <input class="modalinputs" type="password" minlength="6" placeholder="Enter Password" name="psw"
+                        required>
+
+                    <div class="user_choice">
+                        <p>Interested Categories:</p>
+                        <div class="row row1">
+                            <div class="btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-warning active">
+                                    <input type="checkbox" class="interested_categories" name="int_cat_chec"
+                                        value="Soulful" auto-complete="off"> Soulful
+                                </label>
+                            </div>
+                            <div class="btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-warning active">
+                                    <input type="checkbox" class="interested_categories" name="int_cat_chec"
+                                        value="Romance" auto-complete="off"> Romance
+                                </label>
+                            </div>
+                            <div class="btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-warning active">
+                                    <input type="checkbox" class="interested_categories" name="int_cat_chec"
+                                        value="Bollywood Party" auto-complete="off"> Party
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-warning active">
+                                    <input type="checkbox" class="interested_categories" name="int_cat_chec"
+                                        value="Old Songs" auto-complete="off"> Retro
+                                </label>
+                            </div>
+                            <div class="btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-warning active">
+                                    <input type="checkbox" class="interested_categories" name="int_cat_chec" value="Pop"
+                                        auto-complete="off"> Pop
+                                </label>
+                            </div>
+                            <div class="btn-group-toggle" data-toggle="buttons">
+                                <label class="btn btn-warning active">
+                                    <input type="checkbox" class="interested_categories" name="int_cat_chec"
+                                        value="Hip-Hop, Rap" auto-complete="off"> Hip-Hop
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <span>Already have an Account?</span>
+                    <button type="button" class="btn" data-dismiss="modal" data-toggle="modal" id="signmodalfooter"
+                        data-target="#signinmodal">Sign In</button>
+                    <button type="submit" name="signup" class="btn btn-success">Sign Up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% block content %} {% endblock %}
+
+    <!---------------------------------------- Music Player ---------------------------------------->
+    <nav class="navbar navbar-expand-md fixed-bottom" id="player_nav">
+
+        <div class="left">
+            <div class="track-img-con">
+                <img id="track_image" src="{{url_for('static',filename='images/player.gif')}}">
+            </div>
+        </div>
+
+        <div class="middle">
+
+            <div class="buttons">
+                <button onclick="previous_song()" id="pre"><i class="fa fa-step-backward"
+                        aria-hidden="true"></i></button>
+                <button onclick="justplay()" id="play"><i class="fa fa-play" aria-hidden="true"></i></button>
+                <button onclick="next_song()" id="next"><i class="fa fa-step-forward" aria-hidden="true"></i></button>
+            </div>
+
+            <div class="track-details-con">
+                <div id="title">song title</div>
+                <div id="artist">- song artist</div>
+                <div id="album">(Song Album)</div>
+            </div>
+
+            <div class="duration">
+                <label id="currenttime" value="">00:00</label>
+                <input type="range" min="0" max="100" value="0" step="0.1" id="duration_slider"
+                    onchange="change_duration()">
+                <label id="totaltime" value="">00:00</label>
+            </div>
+
+        </div>
+
+        <div class="right">
+            <div class="volume">
+                <i class="fas fa-volume-up" aria-hidden="true" onclick="mute_sound()" id="volume_icon"></i>
+                <input type="range" min="0" max="100" value="100" onchange="volume_change()" id="volume">
+            </div>
+            <span><a data-toggle="modal" data-target="#queue"><img
+                        src="{{url_for('static',filename='images/queue.png')}}" id="queue_icon"></a></span>
+        </div>
+    </nav>
+
+    <!---------------------------------------- Queue Modal ---------------------------------------->
+    <div id="queue" class="modal fade modal-lg" style="padding: 0;" data-keyboard="false" data-backdrop="static"
+        tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="queue_content">
+                <div class="modal-header" id="queue_head">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3">
+                            <h2>Now Playing</h2>
+                            <p class="nmdown" id="nowplayingalbum">Playing From Album</p><br><br>
+                            <img src="https://picsum.photos/640/480?pic=5" class="cover" />
+                            <br><br>
+                            <div>
+                                <h3 class="head" id="nowplayingtitle">Song Name</h3>
+                                <p class="nmdown" id="nowplayinginfo">Artist - Album</p>
+                            </div>
+                        </div>
+                        <div class="col-9 queue-cont" id="loadqueue">
+                            <h2>Queue</h2>
+                            <p class="pdown">10 Songs</p>
+                            <br>
+                            <button class="playbtn btn-default" onclick="saveasplaylist()">Save to Playlist</button>
+                            <br><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!---------------------------------------- Search-List Modal ---------------------------------------->
+    <div id="searchmodal" class="modal fade modal-lg category_modals" style="padding: 0;" data-keyboard="false"
+        data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="queue_content">
+                <div class="modal-header" id="queue_head">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 queue-cont category_content" id="playqueue">
+                            <h2 id="categoryname">Search Results</h2>
+                            <br>
+                            <button class="playbtn btn-default" onclick="playall('search',-1)">Play All</button>
+                            <br><br>
+                            <div id="searchqueue">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!----------------------------------------  Category Modals ---------------------------------------->
+
+    <!----------------------------------------  Soul Modal ---------------------------------------->
+    <div id="playlist0" class="modal fade modal-lg category_modals" style="padding: 0;" data-keyboard="false"
+        data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="queue_content">
+                <div class="modal-header" id="queue_head">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3">
+                            <img src="{{url_for('static',filename='images/Soul.jpg')}}" class="cover-cat" />
+                            <br><br>
+                        </div>
+                        <div class="col-9 queue-cont category_content" id="playqueue">
+                            <h2 id="categoryname">Soulful</h2>
+                            <br>
+                            <button class="playbtn btn-default" onclick="playall('categories',0)">Play All</button>
+                            <br><br>{% for lem in sli[0] %}
+                            <div class="row pad">
+                                <div class="col-1.5" onclick="playrequest_indexhtml({{loop.index}},0)">
+                                    <img src="{{url_for('static',filename='images/Soul_song.jpg')}}" class="songcov" />
+                                </div>
+                                <div class="col-10 nopad">
+                                    <ul class="navbar nav ml-auto" id="playnav">
+                                        <li onclick="playrequest_indexhtml({{loop.index}},0)">
+                                            <p class="songname">{{lem['Title']}}</p>
+                                            <p class="songinfo">{{lem['Artist']}} - {{lem['Album']}}</p>
+                                        </li>
+                                        <li>
+                                            <div class="dropdown dropleft song_options">
+                                                <button class="btn more_btn" type="button" id="dropdownMenuButton"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-ellipsis-v more" aria-hidden="true"></i>
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <label class="dropdown-item"
+                                                        onclick="addtoqueue1('{{uid}}',{{loop.index}},0)">Add to
+                                                        Queue</label>
+                                                    <label class="dropdown-item"
+                                                        onclick="addtoplaylist1('{{uid}}',{{loop.index}},0)">Add
+                                                        to
+                                                        Playlist</label>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!----------------------------------------  Romance Modal ---------------------------------------->
+    <div id="playlist1" class="modal fade modal-lg category_modals" style="padding: 0;" data-keyboard="false"
+        data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="queue_content">
+                <div class="modal-header" id="queue_head">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3">
+                            <img src="{{url_for('static',filename='images/Romance.jpg')}}" class="cover-cat" />
+                            <br><br>
+                        </div>
+                        <div class="col-9 queue-cont category_content" id="playqueue">
+                            <h2 id="categoryname">Romance</h2>
+                            <br>
+                            <button class="playbtn btn-default" onclick="playall('categories',1)">Play All</button>
+                            <br><br>{% for lem in sli[1] %}
+                            <div class="row pad">
+                                <div class="col-1.5" onclick="playrequest_indexhtml({{loop.index}},1)">
+                                    <img src="{{url_for('static',filename='images/Romance_song.jpg')}}"
+                                        class="songcov" />
+                                </div>
+                                <div class="col-10 nopad">
+                                    <ul class="navbar nav ml-auto" id="playnav">
+                                        <li onclick="playrequest_indexhtml({{loop.index}},1)">
+                                            <p class="songname">{{lem['Title']}}</p>
+                                            <p class="songinfo">{{lem['Artist']}} - {{lem['Album']}}</p>
+                                        </li>
+                                        <li>
+                                            <div class="dropdown dropleft song_options">
+                                                <button class="btn more_btn" type="button" id="dropdownMenuButton"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-ellipsis-v more" aria-hidden="true"></i>
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <label class="dropdown-item"
+                                                        onclick="addtoqueue1('{{uid}}',{{loop.index}},1)">Add to
+                                                        Queue</label>
+                                                    <label class="dropdown-item"
+                                                        onclick="addtoplaylist1('{{uid}}',{{loop.index}},1)">Add
+                                                        to
+                                                        Playlist</label>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!----------------------------------------  Bollywood Party Modal ---------------------------------------->
+    <div id="playlist2" class="modal fade modal-lg category_modals" style="padding: 0;" data-keyboard="false"
+        data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="queue_content">
+                <div class="modal-header" id="queue_head">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3">
+                            <img src="{{url_for('static',filename='images/Bollywood Party.jpg')}}" class="cover-cat" />
+                            <br><br>
+                        </div>
+                        <div class="col-9 queue-cont category_content" id="playqueue">
+                            <h2 id="categoryname">Bollywood Party</h2>
+                            <br>
+                            <button class="playbtn btn-default" onclick="playall('categories',2)">Play All</button>
+                            <br><br>{% for lem in sli[2] %}
+                            <div class="row pad">
+                                <div class="col-1.5" onclick="playrequest_indexhtml({{loop.index}},2)">
+                                    <img src="{{url_for('static',filename='images/Party_song.jpg')}}" class="songcov" />
+                                </div>
+                                <div class="col-10 nopad">
+                                    <ul class="navbar nav ml-auto" id="playnav">
+                                        <li onclick="playrequest_indexhtml({{loop.index}},2)">
+                                            <p class="songname">{{lem['Title']}}</p>
+                                            <p class="songinfo">{{lem['Artist']}} - {{lem['Album']}}</p>
+                                        </li>
+                                        <li>
+                                            <div class="dropdown dropleft song_options">
+                                                <button class="btn more_btn" type="button" id="dropdownMenuButton"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-ellipsis-v more" aria-hidden="true"></i>
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <label class="dropdown-item"
+                                                        onclick="addtoqueue1('{{uid}}',{{loop.index}},2)">Add to
+                                                        Queue</label>
+                                                    <label class="dropdown-item"
+                                                        onclick="addtoplaylist1('{{uid}}',{{loop.index}},2)">Add
+                                                        to
+                                                        Playlist</label>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!----------------------------------------  Pop Modal ---------------------------------------->
+    <div id="playlist3" class="modal fade modal-lg category_modals" style="padding: 0;" data-keyboard="false"
+        data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="queue_content">
+                <div class="modal-header" id="queue_head">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3">
+                            <img src="{{url_for('static',filename='images/Pop.jpg')}}" class="cover-cat" />
+                            <br><br>
+                        </div>
+                        <div class="col-9 queue-cont category_content" id="playqueue">
+                            <h2 id="categoryname">Pop</h2>
+                            <br>
+                            <button class="playbtn btn-default" onclick="playall('categories',3)">Play All</button>
+                            <br><br>{% for lem in sli[3] %}
+                            <div class="row pad">
+                                <div class="col-1.5" onclick="playrequest_indexhtml({{loop.index}},3)">
+                                    <img src="{{url_for('static',filename='images/Pop_song.jpg')}}" class="songcov" />
+                                </div>
+                                <div class="col-10 nopad">
+                                    <ul class="navbar nav ml-auto" id="playnav">
+                                        <li onclick="playrequest_indexhtml({{loop.index}},3)">
+                                            <p class="songname">{{lem['Title']}}</p>
+                                            <p class="songinfo">{{lem['Artist']}} - {{lem['Album']}}</p>
+                                        </li>
+                                        <li>
+                                            <div class="dropdown dropleft song_options">
+                                                <button class="btn more_btn" type="button" id="dropdownMenuButton"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-ellipsis-v more" aria-hidden="true"></i>
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <label class="dropdown-item"
+                                                        onclick="addtoqueue1('{{uid}}',{{loop.index}},3)">Add to
+                                                        Queue</label>
+                                                    <label class="dropdown-item"
+                                                        onclick="addtoplaylist1('{{uid}}',{{loop.index}},3)">Add
+                                                        to
+                                                        Playlist</label>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!----------------------------------------  Hip-hop Modal ---------------------------------------->
+    <div id="playlist4" class="modal fade modal-lg category_modals" style="padding: 0;" data-keyboard="false"
+        data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="queue_content">
+                <div class="modal-header" id="queue_head">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3">
+                            <img src="{{url_for('static',filename='images/Rap.jpeg')}}" class="cover-cat" />
+                            <br><br>
+                        </div>
+                        <div class="col-9 queue-cont category_content" id="playqueue">
+                            <h2 id="categoryname">
+                                <pre>HipHop, Rap</pre>
+                            </h2>
+                            <br>
+                            <button class="playbtn btn-default" onclick="playall('categories',4)">Play All</button>
+                            <br><br>{% for lem in sli[4] %}
+                            <div class="row pad">
+                                <div class="col-1.5" onclick="playrequest_indexhtml({{loop.index}},4)">
+                                    <img src="{{url_for('static',filename='images/Rap_song.jpg')}}" class="songcov" />
+                                </div>
+                                <div class="col-10 nopad">
+                                    <ul class="navbar nav ml-auto" id="playnav">
+                                        <li onclick="playrequest_indexhtml({{loop.index}},4)">
+                                            <p class="songname">{{lem['Title']}}</p>
+                                            <p class="songinfo">{{lem['Artist']}} - {{lem['Album']}}</p>
+                                        </li>
+                                        <li>
+                                            <div class="dropdown dropleft song_options">
+                                                <button class="btn more_btn" type="button" id="dropdownMenuButton"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-ellipsis-v more" aria-hidden="true"></i>
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <label class="dropdown-item"
+                                                        onclick="addtoqueue1('{{uid}}',{{loop.index}},4)">Add to
+                                                        Queue</label>
+                                                    <label class="dropdown-item"
+                                                        onclick="addtoplaylist1('{{uid}}',{{loop.index}},4)">Add to
+                                                        Playlist</label>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!----------------------------------------  Retro Modal ---------------------------------------->
+    <div id="playlist5" class="modal fade modal-lg category_modals" style="padding: 0;" data-keyboard="false"
+        data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="queue_content">
+                <div class="modal-header" id="queue_head">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3">
+                            <img src="{{url_for('static',filename='images/Old.jpg')}}" class="cover-cat" />
+                            <br><br>
+                        </div>
+                        <div class="col-9 queue-cont category_content" id="playqueue">
+                            <h2 id="categoryname">Retro</h2>
+                            <br>
+                            <button class="playbtn btn-default" onclick="playall('categories',5)">Play All</button>
+                            <br><br>{% for lem in sli[5] %}
+                            <div class="row pad">
+                                <div class="col-1.5" onclick="playrequest_indexhtml({{loop.index}},5)">
+                                    <img src="{{url_for('static',filename='images/Retro_song.jpg')}}" class="songcov" />
+                                </div>
+                                <div class="col-10 nopad">
+                                    <ul class="navbar nav ml-auto" id="playnav">
+                                        <li onclick="playrequest_indexhtml({{loop.index}},5)">
+                                            <p class="songname">{{lem['Title']}}</p>
+                                            <p class="songinfo">{{lem['Artist']}} - {{lem['Album']}}</p>
+                                        </li>
+                                        <li>
+                                            <div class="dropdown dropleft song_options">
+                                                <button class="btn more_btn" type="button" id="dropdownMenuButton"
+                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fa fa-ellipsis-v more" aria-hidden="true"></i>
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <label class="dropdown-item"
+                                                        onclick="addtoqueue1('{{uid}}',{{loop.index}},5)">Add to
+                                                        Queue</label>
+                                                    <label class="dropdown-item"
+                                                        onclick="addtoplaylist1('{{uid}}',{{loop.index}},5)">Add
+                                                        to
+                                                        Playlist</label>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!----------------------------------------  Trending Modal ---------------------------------------->
+    <div id="popular" class="modal fade modal-lg category_modals" style="padding: 0;" data-keyboard="false"
+        data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="queue_content">
+                <div class="modal-header" id="queue_head">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3">
+                            <img src="{{url_for('static',filename='images/Trending.jpg')}}" class="cover-cat" />
+                            <br><br>
+                        </div>
+                        <div class="col-9 queue-cont category_content" id="popularqueue">
+                            <h2 id="categoryname">Trending</h2>
+                            <br>
+                            <button class="playbtn btn-default" onclick="playall('trending',-1)">Play All</button>
+                            <br><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!----------------------------------------  My Playlist Modal ---------------------------------------->
+    <div id="myplaylist" class="modal fade modal-lg category_modals" style="padding: 0;" data-keyboard="false"
+        data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="queue_content">
+                <div class="modal-header" id="queue_head">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3">
+                            <img src="https://picsum.photos/640/480?pic=5" class="cover" />
+                            <br><br>
+                        </div>
+                        <div class="col-9 queue-cont" id="myplaylistqueue">
+                            <h2 id="categoryname">My Playlist</h2>
+                            <br>
+                            <button class="playbtn btn-default" onclick="playall('myplaylist',-1)">Play All</button>
+                            <br><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!----------------------------------------  Recommend Modal ---------------------------------------->
+    <div id="recommend" class="modal fade modal-lg category_modals" style="padding: 0;" data-keyboard="false"
+        data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" id="queue_content">
+                <div class="modal-header" id="queue_head">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-3">
+                            <img src="{{url_for('static',filename='images/Trending.jpg')}}" class="cover-cat" />
+                            <br><br>
+                        </div>
+                        <div class="col-9 queue-cont category_content" id="recommendqueue">
+                            <h2 id="categoryname">Songs you may like</h2>
+                            <br>
+                            <button class="playbtn btn-default" onclick="playall('recommend',-1)">Play All</button>
+                            <br><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!----------------------------------------Message modal------------------------------------------>
+    <div id="messagemodal" class="modal fade" style="padding: 0;z-index: 5000 !important;height:70px;"
+        data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" id="pop_up" style="background-color: #bccee8 !important">
+                <p id="message" style="text-align:center;margin: 5px !important;"></p>
+            </div>
+        </div>
+    </div>
+
+    <!---------------------------------------- Footer ---------------------------------------->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-8">
+                    <h6>About</h6>
+                    <p class="text-justify">Beat Music is the one-stop music app for the latest to the greatest songs
+                        that you love. Play your favourite music online for free. Enjoy Hindi, English, Bollywood,
+                        Romance, Old songs and more. Add your favorite songs and Manage your personal playlist and
+                        tracks with the help of our online music app.</p>
+                </div>
+
+                <div class="col-xs-8 col-md-4">
+                    <h6>Contact Us</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">Email - beatmusic542@gmail.com</a></li>
+                        <li><a href="#">Address - Mumbai, India</a></li>
+                        <li><a href="#">Mobile - +91 1234567890</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="container" style="margin-bottom: 80px;">
+            <div class="row" id="cont_footer">
+                <div class="col-md-8 col-sm-6 col-xs-12">
+                    <p class="copyright-text">Copyright &copy; 2021 All Rights Reserved by
+                        <a href="#">Beat Music</a>
+                    </p>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <ul class="social-icons">
+                        <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a class="dribbble" href="#"><i class="fa fa-instagram"></i></a></li>
+                        <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    {% block plugins %} {% endblock %}
+
+    <script src="{{url_for('static',filename='js/loadqueue.js')}}"></script>
+    <script src="{{url_for('static',filename='js/musicplayerscript.js')}}"></script>
+
+</body>
+
+</html>
